@@ -1,11 +1,11 @@
 const {MongoClient} = require('mongodb');
-const express = require('express')
-const app = express()
-const port = 3000
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 5000;
 var mail = "";
 var psswd = "";
-var jwt = require('jsonwebtoken')
-// alec.adrian.teucilide@gmail.com
+var jwt = require('jsonwebtoken');
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
@@ -61,7 +61,6 @@ async function findOneListingByName(db,collection, email,psswd) {
         if(result.length != 0){
         	return "Usuario encontrado";
         	console.log(`Usuario encontrado '${email}'`);
-        	collection.updateOne({email: email}, {$set: {token: "tokenChanged"}});
         }else{
         	return "NOT FOUND";
         	console.log(`No listings found with the email '${email}'`);
