@@ -1,16 +1,10 @@
-const express = require('express');
-const app = express();
-const port = process.env.PORT || 5000
+const {MongoClient} = require('mongodb');
+const express = require('express')
+const app = express()
+const port = 3000
 var mail = "";
 var psswd = "";
-
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-})
-
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
-})
+var jwt = require('jsonwebtoken')
 // alec.adrian.teucilide@gmail.com
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
@@ -22,22 +16,20 @@ app.get("/test",(req,res) => {
 
 app.get("/api/auth/alumns/:email/:psswd",function(req,res) {
 	mail = req.params.email;
-	psswd = req.params.psswd; 
-	//res.json({mensaje: 'Alumno con email: '+ req.params.email +' y contraseña: '+ req.params.psswd});
-	var result = main(mail,psswd);
-	res.send({result: 'Administrador con email: '+ result});
+	psswd = req.params.psswd;
+	result = main(mail,psswd);
+	console.log(result);
+	res.json({mensaje: 'Buscando en la base de datos en el Alumno'});
 });
 
-/*
+
 app.get("/api/auth/admins/:email/:psswd",function(req,res) {
 	mail = req.params.email;
 	psswd = req.params.psswd;
-	res.send({mensaje: 'Administrador con email: '+ req.params.email +' y contraseña: '+ req.params.psswd});
 	result = main(mail,psswd);
-	res.json(result);
+	console.log(result);
+	res.json({mensaje: 'Buscando en la base de datos el Administrador'});
 });
-
-*/
 
 
 
@@ -51,7 +43,7 @@ async function main(email,psswd){
  	const db = client.db('project_online_enrollement');
  	const collection=db.collection('students');
     try {
-       	result= await findOneListingByName(client,collection,email,psswd);
+       	result= await findOneListingByName(db,collection,email,psswd);
        	return result;
     } catch (e) {
         console.error(e);
@@ -60,7 +52,7 @@ async function main(email,psswd){
     }
 }
 
-async function findOneListingByName(client,collection, email,psswd) {
+async function findOneListingByName(db,collection, email,psswd) {
     const result = await collection.find({email: email}).toArray();
 
     if (result[0]!=null) {
@@ -68,12 +60,13 @@ async function findOneListingByName(client,collection, email,psswd) {
         console.log(result);
         if(result.length != 0){
         	return "Usuario encontrado";
+        	console.log(`Usuario encontrado '${email}'`);
+        	collection.updateOne({email: email}, {$set: {token: "tokenChanged"}});
         }else{
         	return "NOT FOUND";
+        	console.log(`No listings found with the email '${email}'`);
         }
     } else {
         console.log(`No listings found with the email '${email}'`);
     }
 }
-
-
