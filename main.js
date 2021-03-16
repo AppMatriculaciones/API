@@ -1,10 +1,16 @@
-const {MongoClient} = require('mongodb');
-const express = require('express')
-const app = express()
-const port = 3000
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 5000
 var mail = "";
 var psswd = "";
 
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+})
+
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`);
+})
 // alec.adrian.teucilide@gmail.com
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
@@ -69,3 +75,5 @@ async function findOneListingByName(client,collection, email,psswd) {
         console.log(`No listings found with the email '${email}'`);
     }
 }
+
+
