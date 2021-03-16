@@ -1,44 +1,31 @@
+/*module.exports = {
+	main()
+};*/
 const {MongoClient} = require('mongodb');
 async function main(){
-    /**
-     * Connection URI. Update <username>, <password>, and <your-cluster-url> to reflect your cluster.
-     * See https://docs.mongodb.com/ecosystem/drivers/node/ for more details
-     */
-    const uri = "mongodb+srv://jesus:test@testapi.yejv6.mongodb.net/testAPI?retryWrites=true&w=majority";
-
+    const uri = "mongodb+srv://alec:alec@mflix.spncl.mongodb.net/project_online_enrollement?authSource=admin&replicaSet=atlas-5qhdga-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true";
+    //db.name(project_online_enrollement);
     const client = new MongoClient(uri);
- 
+    await client.connect();
+ 	const db = client.db('project_online_enrollement');
+ 	const collection=db.collection('students');
     try {
         // Connect to the MongoDB cluster
-        await client.connect();
- 
-        // Make the appropriate DB calls
-        await  listDatabases(client);
- 
+        await findOneListingByName(client,collection,"Jesus");
     } catch (e) {
         console.error(e);
     } finally {
         await client.close();
     }
 }
-
 main().catch(console.error);
 
-async function listDatabases(client){
-    databasesList = await client.db().admin().listDatabases();
- 
-    console.log("Databases:");
-    databasesList.databases.forEach(db => console.log(` - ${db.name}`));
-};
-
-async function findOneListingByName(client, nameOfListing) {
-    const result = await client.db("sample_airbnb").collection("listingsAndReviews").findOne({ name: nameOfListing });
+async function findOneListingByName(client,collection, name) {
+    const result = await collection.find({name: name});
     if (result) {
-        console.log(`Found a listing in the collection with the name '${nameOfListing}':`);
+        console.log(`Found a listing in the collection with the name '${name}':`);
         console.log(result);
     } else {
-        console.log(`No listings found with the name '${nameOfListing}'`);
+        console.log(`No listings found with the name '${name}'`);
     }
 }
-
-findOne({ name: nameOfListing })
