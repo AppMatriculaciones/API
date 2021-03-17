@@ -1,71 +1,90 @@
-const {MongoClient} = require('mongodb');
-const express = require('express');
-const app = express();
-const port = process.env.PORT || 5000;
-var mail = "";
-var psswd = "";
-var jwt = require('jsonwebtoken');
+//Imports
+const express = require("express");
+const bodyParser = require("body-parser");
+const mongoClient = require("mongodb").MongoClient;
+const objectId = require("mongodb").ObjectID;
+const jwt = require('jsonwebtoken');
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+//Creating a server instance
+const app = express();
+
+//Defining global variables
+const PORT = process.env.PORT || 5000;
+const CONNECTION_URL = "mongodb+srv://alec:alec@mflix.spncl.mongodb.net/project_online_enrollement?authSource=admin&replicaSet=atlas-5qhdga-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true";
+const DATABASE_NAME = "project_online_enrollement";
+var database, collection;
+
+//https://stackoverflow.com/questions/39870867/what-does-app-usebodyparser-json-do
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+//Connection to mongodb cluster and getting database
+mongoClient
+    .connect(CONNECTION_URL, {useNewUrlParser: true, useUnifiedTopology: true}, (error, client) =>{
+        if(error) {
+            console.log(console.error());
+        }else{
+            database = client.db(DATABASE_NAME);
+            console.log("Connected to `" + DATABASE_NAME + "`!");
+        }
+    });
+    
+app.listen(PORT, () => {
+  console.log(`Server started at http://localhost:${PORT}`)
 })
 
-app.get("/test",(req,res) => {
-	res.json("Test Correcto");
+//======== Endpoints ========
+
+app.get("/",(request,response) => {
+    response.json("Server works!");
 });
 
-app.get("/api/auth/alumns/:email/:psswd",function(req,res) {
-	mail = req.params.email;
-	psswd = req.params.psswd;
-	result = main(mail,psswd);
-	console.log(result);
-	res.json({mensaje: 'Buscando en la base de datos en el Alumno'});
-});
-
-
-app.get("/api/auth/admins/:email/:psswd",function(req,res) {
-	mail = req.params.email;
-	psswd = req.params.psswd;
-	result = main(mail,psswd);
-	console.log(result);
-	res.json({mensaje: 'Buscando en la base de datos el Administrador'});
-});
-
-
-
-
-
-// de momento en este fichero futuramente en mongoConection
-async function main(email,psswd){
-    const uri = "mongodb+srv://alec:alec@mflix.spncl.mongodb.net/project_online_enrollement?authSource=admin&replicaSet=atlas-5qhdga-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true";
-    const client = new MongoClient(uri);
-    await client.connect();
- 	const db = client.db('project_online_enrollement');
- 	const collection=db.collection('students');
-    try {
-       	result= await findOneListingByName(db,collection,email,psswd);
-       	return result;
-    } catch (e) {
-        console.error(e);
-    } finally {
-        await client.close();
-    }
-}
-
-async function findOneListingByName(db,collection, email,psswd) {
-    const result = await collection.find({email: email}).toArray();
-
-    if (result[0]!=null) {
-        console.log(`Found a listing in the collection with the email '${email}':`);
-        console.log(result);
-        if(result.length != 0){
-        	return "Usuario encontrado";
-        	console.log(`Usuario encontrado '${email}'`);
-        }else{
-        	return "NOT FOUND";
-        	console.log(`No listings found with the email '${email}'`);
+//login student -> getStudent + generate token and save it
+app.get("/login/student", (request, response) => {
+    const {email, password} = request.body;
+    database.collection('students').findOne({email: email, password: password}, (error, student) => {
+        if(error){
+            return response.status(500).json({error: error.message});
         }
-    } else {
-        console.log(`No listings found with the email '${email}'`);
-    }
-}
+        if(student == null){
+            response.status(200).json({msg: "Authentification failed."})
+        }else{
+            const {_id, name} = student;
+            const token = jwt.sign({ name: name }, email);
+            
+            database.collection('students').updateOne({
+                "_id": new objectId(_id)
+            }, {
+                $set: {
+                    token: token
+                }
+            });
+            response.status(200).json(student);
+        }
+    });
+});
+
+//login admin -> getAdmin + generate token and save it
+app.get("/login/admin", (request, response) => {
+    const {email, password} = request.body;
+    database.collection('admins').findOne({email: email, password: password}, (error, admin) => {
+        if(error){
+            return response.status(500).json({error: error.message});
+        }
+        if(admin == null){
+            response.status(200).json({msg: "Authentification failed."})
+        }else{
+            const {_id, name} = admin;
+            const token = jwt.sign({ name: name }, email);
+            
+            database.collection('admins').updateOne({
+                "_id": new objectId(_id)
+            }, {
+                $set: {
+                    token: token
+                }
+            });
+            response.status(200).json(admin);
+        }
+    });
+});

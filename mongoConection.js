@@ -1,6 +1,7 @@
 /*module.exports = {
 	main()
 };*/
+//ARCHIVE NO EN USO -> NO USAR POR EL MOMENTO
 const {MongoClient} = require('mongodb');
 async function main(){
     const uri = "mongodb+srv://alec:alec@mflix.spncl.mongodb.net/project_online_enrollement?authSource=admin&replicaSet=atlas-5qhdga-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true";
