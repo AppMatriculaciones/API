@@ -65,7 +65,7 @@ app.get("/login/student", (request, response) => {
     });
 });
 
-//login student con body-> getStudent + generate token and save it
+//login student -> getStudent + generate token and save it
 app.get("/login/student/:email/:password", (request, response) => {
     const email = request.params.email;
     const password = request.params.password;
@@ -87,6 +87,31 @@ app.get("/login/student/:email/:password", (request, response) => {
                 }
             });
             response.status(200).json(student);
+        }
+    });
+});
+
+//login admin with body -> getAdmin + generate token and save it
+app.get("/login/admin", (request, response) => {
+    const {email, password} = request.body;
+    database.collection('admins').findOne({email: email, password: password}, (error, admin) => {
+        if(error){
+            return response.status(500).json({error: error.message});
+        }
+        if(admin == null){
+            response.status(200).json({msg: "Authentification failed."})
+        }else{
+            const {_id, name} = admin;
+            const token = jwt.sign({ name: name }, email);
+            
+            database.collection('admins').updateOne({
+                "_id": new objectId(_id)
+            }, {
+                $set: {
+                    token: token
+                }
+            });
+            response.status(200).json(admin);
         }
     });
 });
@@ -117,27 +142,3 @@ app.get("/login/admin/:email/:password", (request, response) => {
     });
 });
 
-//login admin with body -> getAdmin + generate token and save it
-app.get("/login/admin", (request, response) => {
-    const {email, password} = request.body;
-    database.collection('admins').findOne({email: email, password: password}, (error, admin) => {
-        if(error){
-            return response.status(500).json({error: error.message});
-        }
-        if(admin == null){
-            response.status(200).json({msg: "Authentification failed."})
-        }else{
-            const {_id, name} = admin;
-            const token = jwt.sign({ name: name }, email);
-            
-            database.collection('admins').updateOne({
-                "_id": new objectId(_id)
-            }, {
-                $set: {
-                    token: token
-                }
-            });
-            response.status(200).json(admin);
-        }
-    });
-});
