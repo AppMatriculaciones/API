@@ -18,6 +18,8 @@ var database, collection;
 //https://stackoverflow.com/questions/39870867/what-does-app-usebodyparser-json-do
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+//for corbdoba app can access
+app.use(cors());
 
 //Connection to mongodb cluster and getting database
 mongoClient
