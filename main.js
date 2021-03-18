@@ -5,6 +5,7 @@ const mongoClient = require("mongodb").MongoClient;
 const objectId = require("mongodb").ObjectID;
 const jwt = require('jsonwebtoken');
 const md5 = require('blueimp-md5');
+const cors = require('cors');
 
 //Creating a server instance
 const app = express();
