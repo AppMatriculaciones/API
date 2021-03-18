@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const mongoClient = require("mongodb").MongoClient;
 const objectId = require("mongodb").ObjectID;
 const jwt = require('jsonwebtoken');
+const md5 = require('blueimp-md5');
 
 //Creating a server instance
 const app = express();
@@ -43,7 +44,8 @@ app.get("/",(request,response) => {
 //login student con body-> getStudent + generate token and save it
 app.get("/login/student", (request, response) => {
     const {email, password} = request.body;
-    database.collection('students').findOne({email: email, password: password}, (error, student) => {
+    const hashedPassword = passwordHash.generate(password);
+    database.collection('students').findOne({email: email, password: hashedPassword}, (error, student) => {
         if(error){
             return response.status(500).json({error: error.message});
         }
@@ -69,7 +71,9 @@ app.get("/login/student", (request, response) => {
 app.get("/login/student/:email/:password", (request, response) => {
     const email = request.params.email;
     const password = request.params.password;
-    database.collection('students').findOne({email: email, password: password}, (error, student) => {
+    const hashedPassword = md5(password);
+    console.log(hashedPassword)
+    database.collection('students').findOne({email: email, password: hashedPassword}, (error, student) => {
         if(error){
             return response.status(500).json({error: error.message});
         }
