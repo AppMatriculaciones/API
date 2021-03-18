@@ -44,7 +44,7 @@ app.get("/",(request,response) => {
 //login student con body-> getStudent + generate token and save it
 app.get("/login/student", (request, response) => {
     const {email, password} = request.body;
-    const hashedPassword = passwordHash.generate(password);
+    const hashedPassword = md5(password);
     database.collection('students').findOne({email: email, password: hashedPassword}, (error, student) => {
         if(error){
             return response.status(500).json({error: error.message});
@@ -72,7 +72,6 @@ app.get("/login/student/:email/:password", (request, response) => {
     const email = request.params.email;
     const password = request.params.password;
     const hashedPassword = md5(password);
-    console.log(hashedPassword)
     database.collection('students').findOne({email: email, password: hashedPassword}, (error, student) => {
         if(error){
             return response.status(500).json({error: error.message});
@@ -98,7 +97,8 @@ app.get("/login/student/:email/:password", (request, response) => {
 //login admin with body -> getAdmin + generate token and save it
 app.get("/login/admin", (request, response) => {
     const {email, password} = request.body;
-    database.collection('admins').findOne({email: email, password: password}, (error, admin) => {
+    const hashedPassword = md5(password);
+    database.collection('admins').findOne({email: email, password: hashedPassword}, (error, admin) => {
         if(error){
             return response.status(500).json({error: error.message});
         }
@@ -124,7 +124,8 @@ app.get("/login/admin", (request, response) => {
 app.get("/login/admin/:email/:password", (request, response) => {
     const email = request.params.email;
     const password = request.params.password;
-    database.collection('admins').findOne({email: email, password: password}, (error, admin) => {
+    const hashedPassword = md5(password);
+    database.collection('admins').findOne({email: email, password: hashedPassword}, (error, admin) => {
         if(error){
             return response.status(500).json({error: error.message});
         }
