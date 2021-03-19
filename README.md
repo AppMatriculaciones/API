@@ -58,7 +58,7 @@
         </tr>
         <tr>
             <td>500</td>
-            <td>errr</td>
+            <td>err</td>
             <td>JSON</td>
             <td>Error while trying to acces database</td>
         </tr>
@@ -121,7 +121,7 @@
         </tr>
         <tr>
             <td>500</td>
-            <td>errr</td>
+            <td>err</td>
             <td>JSON</td>
             <td>Error while trying to acces database</td>
         </tr>
@@ -155,7 +155,7 @@
         </tr>
         <tr>
             <td>500</td>
-            <td>errr</td>
+            <td>err</td>
             <td>JSON</td>
             <td>Error while trying to acces database</td>
         </tr>
@@ -183,7 +183,7 @@
         </tr>
         <tr>
             <td>500</td>
-            <td>errr</td>
+            <td>err</td>
             <td>JSON</td>
             <td>Error while trying to acces database</td>
         </tr>
@@ -208,6 +208,12 @@
             <th>Params</th>
             <th>Value</th>
             <th>Description</th>
+        </tr>
+        <tr>
+            <td>500</td>
+            <td>err</td>
+            <td>JSON</td>
+            <td>Error while trying to acces database</td>
         </tr>
         <tr>
             <td>200</td>
