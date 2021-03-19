@@ -142,28 +142,38 @@
     <h2>/grade/create/</h2>
     <table style="width:100%">
         <tr>
-            <th colspan="4">Request</th>
+            <th colspan="5">Request (JSON)</th>
         </tr>
         <tr>
-            <th colspan="4">POST appmatriculacioaaj/grade/create/</th>
+            <th colspan="5">POST appmatriculacioaaj/grade/create/</th>
         </tr>
         <tr>
-            <th>Status</th>
             <th>Params</th>
             <th>Value</th>
             <th>Description</th>
         </tr>
         <tr>
-            <td>500</td>
-            <td>err</td>
-            <td>JSON</td>
-            <td>Error while trying to acces database</td>
+            <td>null</td>
+            <td>null</td>
+            <td>null</td>
+        </tr>
+    </table>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
         </tr>
         <tr>
-            <td>200</td>
-            <td>Status</td>
-            <td>True/False</td>
-            <td>True or False depends of grade creation in Database.</td>
+            <th colspan="4">POST appmatriculacioaaj/grade/create/</th>
+        </tr>
+        <tr>
+            <th>Param</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>500/200</td>
+            <td>Query Stat</td>
         </tr>
     </table>
     </br>
@@ -183,7 +193,7 @@
         <tr>
             <td>grade_id</td>
             <td>string</td>
-            <td>Grade_id to update</td>
+            <td>Grade_id to delete</td>
         </tr>
     </table>
     <table style="width:100%">
@@ -194,23 +204,15 @@
             <th colspan="4">DELETE appmatriculacioaaj/grade/delete/{grade_id}</th>
         </tr>
         <tr>
-            <th>Status</th>
-            <th>Params</th>
+            <th>Param</th>
             <th>Value</th>
             <th>Description</th>
         </tr>
         <tr>
-            <td>500</td>
-            <td>err</td>
-            <td>JSON</td>
-            <td>Error while trying to acces database</td>
-        </tr>
-        <tr>
-            <td>200</td>
-            <td>Succes</td>
-            <td>True/False</td>
-            <td>True or False depends of grade delete in Database.</td>
-        </tr>
+            <td>status</td>
+            <td>500/200</td>
+            <td>Query Stat</td>
+    </tr>
     </table>
     </br>
     <h2>/grade/updateOne/grade_id</h2>
@@ -248,7 +250,7 @@
             <td>status</td>
             <td>500/200</td>
             <td>Query Stat</td>
-    </tr>
+        </tr>
     </table>
 </body>
 
