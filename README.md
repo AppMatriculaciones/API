@@ -204,23 +204,15 @@
             <th colspan="4">PUT appmatriculacioaaj/grade/updateOne/{grade_id}</th>
         </tr>
         <tr>
-            <th>Status</th>
-            <th>Params</th>
+            <th>Param</th>
             <th>Value</th>
             <th>Description</th>
         </tr>
         <tr>
-            <td>500</td>
-            <td>err</td>
-            <td>JSON</td>
-            <td>Error while trying to acces database</td>
-        </tr>
-        <tr>
-            <td>200</td>
-            <td>Succes</td>
-            <td>True/False</td>
-            <td>True or False depends of grade update in Database.</td>
-        </tr>
+            <td>status</td>
+            <td>500/200</td>
+            <td>Query Stat</td>
+    </tr>
     </table>
 </body>
 
