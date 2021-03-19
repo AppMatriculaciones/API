@@ -198,7 +198,36 @@
     <h2>/grade/updateOne/grade_id</h2>
     <table style="width:100%">
         <tr>
-            <th colspan="4">Request</th>
+            <th colspan="5">Request</th>
+        </tr>
+        <tr>
+            <th colspan="5">PUT appmatriculacioaaj/grade/updateOne/{grade_id}</th>
+        </tr>
+        <tr>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Body</th>
+            <th>Content</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>grade_id</td>
+            <td>string</td>
+            <td>JSON</td>
+            <td></td>
+            <td>Student's email</td>
+        </tr>
+        <tr>
+            <td>password</td>
+            <td>string</td>
+            <td></td>
+            <td></td>
+            <td>Student's hashed password</td>
+        </tr>
+    </table>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
         </tr>
         <tr>
             <th colspan="4">PUT appmatriculacioaaj/grade/updateOne/{grade_id}</th>
