@@ -340,7 +340,7 @@
         <tr>
             <td>body</td>
             <td>JSON</td>
-            <td>All grades data.</td>
+            <td>Returns an ID and Name from a grade</td>
         </tr>
     </table>
 </body>
