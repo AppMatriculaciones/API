@@ -144,7 +144,7 @@
             <th colspan="4">Request</th>
         </tr>
         <tr>
-            <th colspan="4">GET appmatriculacioaaj/grade/create/</th>
+            <th colspan="4">POST appmatriculacioaaj/grade/create/</th>
         </tr>
         <tr>
             <th>Status</th>
