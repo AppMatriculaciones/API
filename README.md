@@ -139,6 +139,7 @@
         </tr>
     </table>
     </br>
+    <h2>/grade/create/</h2>
     <table style="width:100%">
         <tr>
             <th colspan="4">Request</th>
@@ -160,15 +161,37 @@
         </tr>
         <tr>
             <td>200</td>
-            <td>msg</td>
+            <td>Status</td>
+            <td>True/False</td>
+            <td>True or False depends of grade creation in Database.</td>
+        </tr>
+    </table>
+    </br>
+    <h2>/grade/delete/grade_id</h2>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Request</th>
+        </tr>
+        <tr>
+            <th colspan="4">POST appmatriculacioaaj/grade/delete/{grade_id}</th>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>500</td>
+            <td>errr</td>
             <td>JSON</td>
-            <td>Message in case authentification fails</td>
+            <td>Error while trying to acces database</td>
         </tr>
         <tr>
             <td>200</td>
             <td>Status</td>
             <td>True/False</td>
-            <td>True or False depends of grade creation in Database.</td>
+            <td>True or False depends of grade delete in Database.</td>
         </tr>
     </table>
 </body>
