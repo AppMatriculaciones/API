@@ -170,7 +170,25 @@
     <h2>/grade/delete/grade_id</h2>
     <table style="width:100%">
         <tr>
-            <th colspan="4">Request</th>
+            <th colspan="5">Request</th>
+        </tr>
+        <tr>
+            <th colspan="5">DELETE appmatriculacioaaj/grade/delete/{grade_id}</th>
+        </tr>
+        <tr>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>grade_id</td>
+            <td>string</td>
+            <td>Grade_id to update</td>
+        </tr>
+    </table>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
         </tr>
         <tr>
             <th colspan="4">DELETE appmatriculacioaaj/grade/delete/{grade_id}</th>
@@ -198,7 +216,7 @@
     <h2>/grade/updateOne/grade_id</h2>
     <table style="width:100%">
         <tr>
-            <th colspan="5">Request</th>
+            <th colspan="5">Request (JSON)</th>
         </tr>
         <tr>
             <th colspan="5">PUT appmatriculacioaaj/grade/updateOne/{grade_id}</th>
