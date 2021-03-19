@@ -12,9 +12,7 @@
 </head>
 
 <body>
-
     <h2>login/student/email/password</h2>
-
     <table style="width:100%">
         <tr>
             <th colspan="5">Request</th>
@@ -77,9 +75,7 @@
             <td>Student's data in json format</td>
         </tr>
     </table>
-
     <h2>login/admin/email/password</h2>
-
     <table style="width:100%">
         <tr>
             <th colspan="5">Request</th>
