@@ -206,23 +206,12 @@
         <tr>
             <th>Params</th>
             <th>Value</th>
-            <th>Body</th>
-            <th>Content</th>
             <th>Description</th>
         </tr>
         <tr>
             <td>grade_id</td>
             <td>string</td>
-            <td>JSON</td>
-            <td></td>
-            <td>Student's email</td>
-        </tr>
-        <tr>
-            <td>password</td>
-            <td>string</td>
-            <td></td>
-            <td></td>
-            <td>Student's hashed password</td>
+            <td>Grade_id to update</td>
         </tr>
     </table>
     <table style="width:100%">
