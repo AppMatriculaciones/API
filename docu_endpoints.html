@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>login/student/email/password</h2>
+
+    <table style="width:100%">
+        <tr>
+            <th colspan="5">Request</th>
+        </tr>
+        <tr>
+            <th colspan="5">GET appmatriculacioaaj.herokuapp.com/login/student/{email}/{password}</th>
+        </tr>
+        <tr>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Body</th>
+            <th>Content</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>email</td>
+            <td>string</td>
+            <td></td>
+            <td></td>
+            <td>Student's email</td>
+        </tr>
+        <tr>
+            <td>password</td>
+            <td>string</td>
+            <td></td>
+            <td></td>
+            <td>Student's hashed password</td>
+        </tr>
+    </table>
+    <br>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
+        </tr>
+        <tr>
+            <th colspan="4">GET appmatriculacioaaj.herokuapp.com/login/student/{email}/{password}</th>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>500</td>
+            <td>errr</td>
+            <td>JSON</td>
+            <td>Error while trying to acces database</td>
+        </tr>
+        <tr>
+            <td>200</td>
+            <td>msg</td>
+            <td>JSON</td>
+            <td>Message in case authentification fails</td>
+        </tr>
+        <tr>
+            <td>200</td>
+            <td>student</td>
+            <td>JSON</td>
+            <td>Student's data in json format</td>
+        </tr>
+    </table>
+
+    <h2>login/admin/email/password</h2>
+
+    <table style="width:100%">
+        <tr>
+            <th colspan="5">Request</th>
+        </tr>
+        <tr>
+            <th colspan="5">GET appmatriculacioaaj.herokuapp.com/login/admin/{email}/{password}</th>
+        </tr>
+        <tr>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Body</th>
+            <th>Content</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>email</td>
+            <td>string</td>
+            <td></td>
+            <td></td>
+            <td>Admin's email</td>
+        </tr>
+        <tr>
+            <td>password</td>
+            <td>string</td>
+            <td></td>
+            <td></td>
+            <td>Admin's hashed password</td>
+        </tr>
+    </table>
+    <br>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
+        </tr>
+        <tr>
+            <th colspan="4">GET appmatriculacioaaj.herokuapp.com/login/student/{email}/{password}</th>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>500</td>
+            <td>errr</td>
+            <td>JSON</td>
+            <td>Error while trying to acces database</td>
+        </tr>
+        <tr>
+            <td>200</td>
+            <td>msg</td>
+            <td>JSON</td>
+            <td>Message in case authentification fails</td>
+        </tr>
+        <tr>
+            <td>200</td>
+            <td>admin</td>
+            <td>JSON</td>
+            <td>Admin's data in json format</td>
+        </tr>
+    </table>
+
+    <h2>career/create</h2>
+
+    <table style="width:100%">
+        <tr>
+            <th colspan="5">Request</th>
+        </tr>
+        <tr>
+            <th colspan="5">POST appmatriculacioaaj.herokuapp.com/career/create</th>
+        </tr>
+        <tr>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Body</th>
+            <th>Content</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>JSON</td>
+            <td>Career data</td>
+            <td>Data of career to be created in JSON format</td>
+        </tr>
+    </table>
+    <br>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
+        </tr>
+        <tr>
+            <th colspan="4">GET appmatriculacioaaj.herokuapp.com/career/create</th>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>500</td>
+            <td>errr</td>
+            <td>JSON</td>
+            <td>Error while trying to acces database</td>
+        </tr>
+        <tr>
+            <td>200</td>
+            <td>msg</td>
+            <td>JSON</td>
+            <td>Message in case of failed insert - career already exists.</td>
+        </tr>
+        <tr>
+            <td>200</td>
+            <td>_id</td>
+            <td>JSON</td>
+            <td>Mongo ObjectId value of career created</td>
+        </tr>
+    </table>
+
+    <h2>career/get/code</h2>
+
+    <table style="width:100%">
+        <tr>
+            <th colspan="5">Request</th>
+        </tr>
+        <tr>
+            <th colspan="5">GET appmatriculacioaaj.herokuapp.com/career/get/code</th>
+        </tr>
+        <tr>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Body</th>
+            <th>Content</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>code</td>
+            <td>string</td>
+            <td></td>
+            <td></td>
+            <td>Career's code</td>
+        </tr>
+    </table>
+    <br>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
+        </tr>
+        <tr>
+            <th colspan="4">GET appmatriculacioaaj.herokuapp.com/career/get/code</th>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>500</td>
+            <td>errr</td>
+            <td>JSON</td>
+            <td>Error while trying to acces database</td>
+        </tr>
+        <tr>
+            <td>200</td>
+            <td>msg</td>
+            <td>JSON</td>
+            <td>Message in case of career not found.</td>
+        </tr>
+        <tr>
+            <td>200</td>
+            <td>career</td>
+            <td>JSON</td>
+            <td>Data of career in JSON format</td>
+        </tr>
+    </table>
+
+    <h2>careers/get</h2>
+
+    <table style="width:100%">
+        <tr>
+            <th colspan="5">Request</th>
+        </tr>
+        <tr>
+            <th colspan="5">GET appmatriculacioaaj.herokuapp.com/careers/get</th>
+        </tr>
+        <tr>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Body</th>
+            <th>Content</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+    <br>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
+        </tr>
+        <tr>
+            <th colspan="4">GET appmatriculacioaaj.herokuapp.com/careers/get</th>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>500</td>
+            <td>errr</td>
+            <td>JSON</td>
+            <td>Error while trying to acces database</td>
+        </tr>
+        <tr>
+            <td>200</td>
+            <td>msg</td>
+            <td>JSON</td>
+            <td>Message in case of careers not found.</td>
+        </tr>
+        <tr>
+            <td>200</td>
+            <td>careers</td>
+            <td>JSON</td>
+            <td>Array of careers in JSON format</td>
+        </tr>
+    </table>
+
+    <h2>career/update/code</h2>
+
+    <table style="width:100%">
+        <tr>
+            <th colspan="5">Request</th>
+        </tr>
+        <tr>
+            <th colspan="5">PUT appmatriculacioaaj.herokuapp.com/career/update/code</th>
+        </tr>
+        <tr>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Body</th>
+            <th>Content</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>JSON</td>
+            <td>Data updated of career</td>
+            <td>This data will replace the stored one</td>
+        </tr>
+    </table>
+    <br>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
+        </tr>
+        <tr>
+            <th colspan="4">PUT appmatriculacioaaj.herokuapp.com/career/update/code</th>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>500</td>
+            <td>errr</td>
+            <td>JSON</td>
+            <td>Error while trying to acces database</td>
+        </tr>
+        <tr>
+            <td>200</td>
+            <td>msg</td>
+            <td>JSON</td>
+            <td>Message in case of failed update.</td>
+        </tr>
+        <tr>
+            <td>200</td>
+            <td>_id</td>
+            <td>JSON</td>
+            <td>Mongo ObjectId of career updated</td>
+        </tr>
+    </table>
+
+    <h2>career/delete/code</h2>
+
+    <table style="width:100%">
+        <tr>
+            <th colspan="5">Request</th>
+        </tr>
+        <tr>
+            <th colspan="5">DELETE appmatriculacioaaj.herokuapp.com/career/delete/code</th>
+        </tr>
+        <tr>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Body</th>
+            <th>Content</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>code</td>
+            <td>string</td>
+            <td></td>
+            <td></td>
+            <td>Code of career to be deleted.</td>
+        </tr>
+    </table>
+    <br>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
+        </tr>
+        <tr>
+            <th colspan="4">DELETE appmatriculacioaaj.herokuapp.com/career/delete/code</th>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>500</td>
+            <td>errr</td>
+            <td>JSON</td>
+            <td>Error while trying to acces database</td>
+        </tr>
+        <tr>
+            <td>200</td>
+            <td>msg</td>
+            <td>JSON</td>
+            <td>Message in case of failed delete.</td>
+        </tr>
+        <tr>
+            <td>200</td>
+            <td>msg</td>
+            <td>JSON</td>
+            <td>Message career deleted succesfully.</td>
+        </tr>
+    </table>
+
+</body>
+
+</html>
