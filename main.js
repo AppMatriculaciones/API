@@ -37,11 +37,14 @@ app.listen(PORT, () => {
   console.log(`Server started at http://localhost:${PORT}`)
 })
 
-//======== Endpoints ========
+// ======== Endpoints ======== //
 
 app.get("/",(request,response) => {
     response.json("Server works!");
 });
+
+
+// ========= Authentification ========== // 
 
 //generating ajax request with body -> https://stackoverflow.com/questions/4159701/jquery-posting-valid-json-in-request-body
 //login student con body-> getStudent + generate token and save it
@@ -148,5 +151,234 @@ app.get("/login/admin/:email/:password", (request, response) => {
             response.status(200).json(admin);
         }
     });
+});
+
+//=========== Crud careers ===========//
+
+app.post("/career/create", (request, response) => {
+
+});
+
+app.get("/careers/get", (request, response) => {
+    //const careers = database.collection('careers').find({}).toArray().then(docs => console.log("all documents", docs));
+    database.collection('careers').find({}).toArray().then(careers =>{
+        response.status(200).json(careers);
+    });
+
+    /*database.collection('careers').find({}).toArray().then((error, careers) =>{
+        if(error){
+            return response.status(500).json({error: error.message});
+        }
+        if(careers == null){
+            response.status(200).json({msg: "No careers found."})
+        }else{
+            response.status(200).json(careers);
+        }
+    });*/
+
+    /*
+    const careers = database.collection('careers').find({}).toArray().then(items => {
+        console.log(`Successfully found ${items.length} documents.`)
+        items.forEach(console.log)
+      }).catch(err => console.error(`Failed to find documents: ${err}`))*/
+    /*database.collection('careers').findOne({}, (error, careers) => {
+        if(error){
+            return response.status(500).json({error: error.message});
+        }
+        if(careers == null){
+            response.status(200).json({msg: "No careers found."})
+        }else{
+            response.status(200).json(careers);
+        }
+    });*/
+});
+
+app.get("/career/get/:code", (request, response) => {
+
+    const code = request.params.code;
+    database.collection('careers').findOne({code : code}, (error, career) => {
+        if(error){
+            return response.status(500).json({error: error.message});
+        }
+        if(career == null){
+            response.status(200).json({msg: "No career found."})
+        }else{
+            response.status(200).json(career);
+        }
+    });
+});
+
+app.put("/career/update/:code", (request, response) => {
+
+});
+
+app.delete("/career/delete/:code", (request, response) => {
+
+});
+
+//=========== Crud mps ===========//
+
+app.post("/mp/create", (request, response) => {
+
+});
+
+app.get("/mps/getbycareer/:careercode", (request, response) => {
+
+    const careercode = request.params.careercode;
+    database.collection('mps').aggregate([
+        {
+          $lookup:
+            {
+              from: "careers",
+              localField: "career_id",
+              foreignField: "_id",
+              as: "mp_career"
+            }
+       },
+       { $match: { 'mp_career.code': careercode } },
+       { $project: {_id: 1,
+                    code: 1,
+                    name : 1,
+                    duration_min: 1,
+                    duration_max: 1,
+                    date_start: 1,
+                    date_end: 1,
+                    career_id: 1 } }
+     ]).toArray().then(mps =>{
+        response.status(200).json(mps);
+    });
+});
+
+app.get("/mp/get/:code", (request, response) => {
+
+    const code = request.params.code;
+    database.collection('mps').findOne({code : code}, (error, mp) => {
+        if(error){
+            return response.status(500).json({error: error.message});
+        }
+        if(mp == null){
+            response.status(200).json({msg: "No mp found."})
+        }else{
+            response.status(200).json(mp);
+        }
+    });
+    
+});
+
+app.put("/mp/update/:code", (request, response) => {
+
+});
+
+app.delete("/mp/delete/:code", (request, response) => {
+
+});
+
+app.delete("/mps/delete/:careercode", (request, response) => {
+
+});
+
+//=========== Crud ufs ===========//
+
+app.post("/uf/create", (request, response) => {
+
+});
+
+app.get("/ufs/getbycareer/:careercode", (request, response) => {
+
+    const careercode = request.params.careercode;
+    database.collection('ufs').aggregate([
+        {
+          $lookup:
+          {
+            from: 'mps',
+            localField: 'mp_id',
+            foreignField: '_id',
+            as: 'mp_uf'
+          }
+       },
+       {
+        $lookup:
+        {
+            from: 'careers',
+            localField: 'mp_uf.0.career_id',
+            foreignField: '_id',
+            as: 'career_mp'
+          }
+     },
+       { $match: { 'career_mp.0.code': careercode } },
+       { $project: {
+                _id: 1,
+                code: 1,
+                name: 1,
+                duration: 1,
+                isProject: 1,
+                isFct: 1,
+                isLanguage: 1
+                } 
+        }
+     ]).toArray().then(ufs =>{
+        response.status(200).json(ufs);
+    });
+});
+
+app.get("/ufs/getbymp/:mpcode", (request, response) => {
+
+    const mpcode = request.params.mpcode;
+    database.collection('ufs').aggregate([
+        {
+          $lookup:
+            {
+                from: 'mps',
+                localField: 'mp_id',
+                foreignField: '_id',
+                as: 'mp_uf'
+            }
+       },
+       { $match: { 'mp_uf.code': mpcode } },
+       { $project: {
+                    _id: 1,
+                    code: 1,
+                    name: 1,
+                    duration: 1,
+                    isProject: 1,
+                    isFct: 1,
+                    isLanguage: 1
+                    } 
+            }
+     ]).toArray().then(ufs =>{
+        response.status(200).json((ufs));
+    });
+});
+
+app.get("/uf/get/:code", (request, response) => {
+
+    const code = request.params.code;
+    database.collection('ufs').findOne({code : code}, (error, uf) => {
+        if(error){
+            return response.status(500).json({error: error.message});
+        }
+        if(uf == null){
+            response.status(200).json({msg: "No uf found."})
+        }else{
+            response.status(200).json(uf);
+        }
+    });
+    
+});
+
+app.put("/uf/update/:code", (request, response) => {
+
+});
+
+app.delete("/uf/delete/:code", (request, response) => {
+
+});
+
+app.delete("/ufs/delete/:careercode", (request, response) => {
+
+});
+
+app.delete("/ufs/delete/:mpcode", (request, response) => {
+
 });
 
