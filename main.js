@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 //for corbdoba app can access
 app.use(cors());
-
+/*
 //Connection to mongodb cluster and getting database
 mongoClient
     .connect(CONNECTION_URL, {useNewUrlParser: true, useUnifiedTopology: true}, (error, client) =>{
@@ -32,7 +32,15 @@ mongoClient
             console.log("Connected to `" + DATABASE_NAME + "`!");
         }
     });
-    
+*/
+mongoClient
+.connect(CONNECTION_URL, {useNewUrlParser: true, useUnifiedTopology: true})
+.then((client) => {
+    console.log("Connected to mongodb.");
+    database = client.db(DATABASE_NAME);
+})
+.catch((err) => console.log(err));
+
 app.listen(PORT, () => {
   console.log(`Server started at http://localhost:${PORT}`)
 })
@@ -43,13 +51,13 @@ app.get("/",(request,response) => {
     response.json("Server works!");
 });
 
-
 // ========= Authentification ========== // 
 
 //generating ajax request with body -> https://stackoverflow.com/questions/4159701/jquery-posting-valid-json-in-request-body
 //login student con body-> getStudent + generate token and save it
 app.get("/login/student", (request, response) => {
     const {email, password} = request.body;
+    console.log(request.body);
     const hashedPassword = md5(password);
     database.collection('students').findOne({email: email, password: hashedPassword}, (error, student) => {
         if(error){
@@ -73,7 +81,7 @@ app.get("/login/student", (request, response) => {
     });
 });
 
-//login student -> getStudent + generate token and save it
+//login student -> getStudent + generate token and save it solo /login/student para params con metodo postman
 app.get("/login/student/:email/:password", (request, response) => {
     const email = request.params.email;
     const password = request.params.password;
@@ -157,40 +165,29 @@ app.get("/login/admin/:email/:password", (request, response) => {
 
 app.post("/career/create", (request, response) => {
 
+    const newCareer = request.body;
+    database.collection('careers').insertOne(newCareer).then(result =>{
+        if(result.insertedCount == 0){
+            response.status(200).json({msg: "Failed insertion."})
+        }else{
+            response.status(200).json(result.insertedId);
+        }
+    }).catch((error) => {
+        return response.status(500).json({error: error.message});
+    });
 });
 
 app.get("/careers/get", (request, response) => {
-    //const careers = database.collection('careers').find({}).toArray().then(docs => console.log("all documents", docs));
-    database.collection('careers').find({}).toArray().then(careers =>{
-        response.status(200).json(careers);
+    
+    database.collection('careers').find({}).toArray().then((careers) =>{
+        if(careers == null){
+            response.status(200).json({msg: "No careers found."})
+        }else{
+            response.status(200).json(careers);
+        }
+    }).catch((error) => {
+        return response.status(500).json({error: error.message});
     });
-
-    /*database.collection('careers').find({}).toArray().then((error, careers) =>{
-        if(error){
-            return response.status(500).json({error: error.message});
-        }
-        if(careers == null){
-            response.status(200).json({msg: "No careers found."})
-        }else{
-            response.status(200).json(careers);
-        }
-    });*/
-
-    /*
-    const careers = database.collection('careers').find({}).toArray().then(items => {
-        console.log(`Successfully found ${items.length} documents.`)
-        items.forEach(console.log)
-      }).catch(err => console.error(`Failed to find documents: ${err}`))*/
-    /*database.collection('careers').findOne({}, (error, careers) => {
-        if(error){
-            return response.status(500).json({error: error.message});
-        }
-        if(careers == null){
-            response.status(200).json({msg: "No careers found."})
-        }else{
-            response.status(200).json(careers);
-        }
-    });*/
 });
 
 app.get("/career/get/:code", (request, response) => {
@@ -219,7 +216,16 @@ app.delete("/career/delete/:code", (request, response) => {
 //=========== Crud mps ===========//
 
 app.post("/mp/create", (request, response) => {
-
+    const newMp = request.body;
+    database.collection('mps').insertOne(newMp).then(result =>{
+        if(result.insertedCount == 0){
+            response.status(200).json({msg: "Failed insertion."})
+        }else{
+            response.status(200).json(result.insertedId);
+        }
+    }).catch((error) => {
+        return response.status(500).json({error: error.message});
+    });
 });
 
 app.get("/mps/getbycareer/:careercode", (request, response) => {
@@ -244,8 +250,14 @@ app.get("/mps/getbycareer/:careercode", (request, response) => {
                     date_start: 1,
                     date_end: 1,
                     career_id: 1 } }
-     ]).toArray().then(mps =>{
-        response.status(200).json(mps);
+     ]).toArray().then((mps) =>{
+        if(mps == null){
+            response.status(200).json({msg: "No mps found."})
+        }else{
+            response.status(200).json(mps);
+        }
+    }).catch((error) => {
+        return response.status(500).json({error: error.message});
     });
 });
 
@@ -262,7 +274,6 @@ app.get("/mp/get/:code", (request, response) => {
             response.status(200).json(mp);
         }
     });
-    
 });
 
 app.put("/mp/update/:code", (request, response) => {
@@ -280,7 +291,16 @@ app.delete("/mps/delete/:careercode", (request, response) => {
 //=========== Crud ufs ===========//
 
 app.post("/uf/create", (request, response) => {
-
+    const newUf = request.body;
+    database.collection('ufs').insertOne(newUf).then(result =>{
+        if(result.insertedCount == 0){
+            response.status(200).json({msg: "Failed insertion."})
+        }else{
+            response.status(200).json(result.insertedId);
+        }
+    }).catch((error) => {
+        return response.status(500).json({error: error.message});
+    });
 });
 
 app.get("/ufs/getbycareer/:careercode", (request, response) => {
@@ -316,8 +336,14 @@ app.get("/ufs/getbycareer/:careercode", (request, response) => {
                 isLanguage: 1
                 } 
         }
-     ]).toArray().then(ufs =>{
-        response.status(200).json(ufs);
+     ]).toArray().then((ufs) =>{
+        if(ufs == null){
+            response.status(200).json({msg: "No ufs found."})
+        }else{
+            response.status(200).json(ufs);
+        }
+    }).catch((error) => {
+        return response.status(500).json({error: error.message});
     });
 });
 
@@ -345,8 +371,14 @@ app.get("/ufs/getbymp/:mpcode", (request, response) => {
                     isLanguage: 1
                     } 
             }
-     ]).toArray().then(ufs =>{
-        response.status(200).json((ufs));
+     ]).toArray().then((ufs) =>{
+        if(ufs == null){
+            response.status(200).json({msg: "No ufs found."})
+        }else{
+            response.status(200).json(ufs);
+        }
+    }).catch((error) => {
+        return response.status(500).json({error: error.message});
     });
 });
 
@@ -382,3 +414,25 @@ app.delete("/ufs/delete/:mpcode", (request, response) => {
 
 });
 
+
+/**
+ * NOTAS ALEC
+ * Promesas -> def
+ *          -> imagen
+ *          -> connection to mongo
+ *          -> careers/get
+ * 
+ * Request -> parametros postman?
+ *         -> parametros como generarlos java?
+ *         -> body como generarlo en java?
+ *         -> docu api
+ * 
+ * Token -> def
+ *       -> como generarlo y usarlo?
+ */
+/*try{
+fetch().then(respuesta => {return new Promise((accept, reject) => {  try{ accept(JSON.parse(respuesta.data))} catch {reject(XXX)} }).then(respuestaJSON => ...fetch.).catch
+}catch {
+
+}
+*/
