@@ -138,6 +138,8 @@
             <td>Admin's data in json format</td>
         </tr>
     </table>
+    </br></br>
+    <h1>CAREER CRUD</h1>
     </br>
     <h2>/career/create/</h2>
     <table style="width:100%">
@@ -178,7 +180,7 @@
         <tr>
             <td>grade_id</td>
             <td>string</td>
-            <td>Grade_id from the new grade</td>
+            <td>Code from the new career</td>
         </tr>
     </table>
     </br>
@@ -198,7 +200,7 @@
         <tr>
             <td>grade_id</td>
             <td>string</td>
-            <td>Grade_id to delete</td>
+            <td>Code to delete</td>
         </tr>
     </table>
     <table style="width:100%">
@@ -274,7 +276,7 @@
         <tr>
             <td>cose</td>
             <td>string</td>
-            <td>Grade_id to read</td>
+            <td>Code to read</td>
         </tr>
     </table>
     <table style="width:100%">
@@ -344,6 +346,8 @@
         </tr>
     </table>
     <h5>RETURN: {"Status":200, "_id":128370293849723084, "name": "Desenvolupament d'Aplicacions Multiplataforma"}</h5>
+    </br></br>
+    <h1>MP's CRUD</h1>
     </br>
     <h2>/mps/getbycareer/code</h2>
     <table style="width:100%">
@@ -516,6 +520,8 @@
             <td>True if the action is correct and false if it's wrong</td>
         </tr>
     </table>
+    </br></br>
+    <h1>UF's CRUD</h1>
 </body>
 
 </html>
