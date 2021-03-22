@@ -21,29 +21,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 //for corbdoba app can access
 app.use(cors());
-/*
-//Connection to mongodb cluster and getting database
-mongoClient
-    .connect(CONNECTION_URL, {useNewUrlParser: true, useUnifiedTopology: true}, (error, client) =>{
-        if(error) {
-            console.log(console.error());
-        }else{
-            database = client.db(DATABASE_NAME);
-            console.log("Connected to `" + DATABASE_NAME + "`!");
-        }
-    });
-*/
+
 mongoClient
 .connect(CONNECTION_URL, {useNewUrlParser: true, useUnifiedTopology: true})
 .then((client) => {
     console.log("Connected to mongodb.");
     database = client.db(DATABASE_NAME);
+
+    app.listen(PORT, () => {
+        console.log(`Server started at http://localhost:${PORT}`)
+      })
 })
 .catch((err) => console.log(err));
-
-app.listen(PORT, () => {
-  console.log(`Server started at http://localhost:${PORT}`)
-})
 
 // ======== Endpoints ======== //
 
@@ -216,7 +205,9 @@ app.delete("/career/delete/:code", (request, response) => {
 //=========== Crud mps ===========//
 
 app.post("/mp/create", (request, response) => {
-    const newMp = request.body;
+    let newMp = request.body;
+    let career_mongo_id = newMp.career_id;
+    newMp.career_id = objectId(career_mongo_id);
     database.collection('mps').insertOne(newMp).then(result =>{
         if(result.insertedCount == 0){
             response.status(200).json({msg: "Failed insertion."})
@@ -291,7 +282,9 @@ app.delete("/mps/delete/:careercode", (request, response) => {
 //=========== Crud ufs ===========//
 
 app.post("/uf/create", (request, response) => {
-    const newUf = request.body;
+    let newUf = request.body;
+    let mp_mongo_id = newUf.mp_id;
+    newUf.mp_id = objectId(mp_mongo_id);
     database.collection('ufs').insertOne(newUf).then(result =>{
         if(result.insertedCount == 0){
             response.status(200).json({msg: "Failed insertion."})
@@ -413,26 +406,3 @@ app.delete("/ufs/delete/:careercode", (request, response) => {
 app.delete("/ufs/delete/:mpcode", (request, response) => {
 
 });
-
-
-/**
- * NOTAS ALEC
- * Promesas -> def
- *          -> imagen
- *          -> connection to mongo
- *          -> careers/get
- * 
- * Request -> parametros postman?
- *         -> parametros como generarlos java?
- *         -> body como generarlo en java?
- *         -> docu api
- * 
- * Token -> def
- *       -> como generarlo y usarlo?
- */
-/*try{
-fetch().then(respuesta => {return new Promise((accept, reject) => {  try{ accept(JSON.parse(respuesta.data))} catch {reject(XXX)} }).then(respuestaJSON => ...fetch.).catch
-}catch {
-
-}
-*/
