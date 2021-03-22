@@ -429,7 +429,7 @@
             <td>Query Stat</td>
         </tr>
         <tr>
-            <td>Ducces</td>
+            <td>Succes</td>
             <td>True/False</td>
             <td>True if the action is correct and false if is wrong</td>
         </tr>
@@ -647,6 +647,97 @@
         <tr>
             <td>body</td>
             <td>JSON</td>
+            <td>Returns all UF's from mp code</td>
+        </tr>
+    </table>
+    </br>
+    <h2>/uf/get/{code}</h2>
+    <table style="width:100%">
+        <tr>
+            <th colspan="5">Request</th>
+        </tr>
+        <tr>
+            <th colspan="5">GET appmatriculacioaaj.herokuapp.com/uf/get/{code}</th>
+        </tr>
+        <tr>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>mpcode</td>
+            <td>String</td>
+            <td>UF code to achieve an UF</td>
+        </tr>
+    </table>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
+        </tr>
+        <tr>
+            <th colspan="4">GET appmatriculacioaaj.herokuapp.com/uf/get/{code}</th>
+        </tr>
+        <tr>
+            <th>Param</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>500/200</td>
+            <td>Query Stat</td>
+        </tr>
+        <tr>
+            <td>body</td>
+            <td>JSON</td>
+            <td>Returns all UF's from code</td>
+        </tr>
+    </table>
+    </br>
+    <h2>/uf/update/{code}</h2>
+    <table style="width:100%">
+        <tr>
+            <th colspan="5">Request (JSON)</th>
+        </tr>
+        <tr>
+            <th colspan="5">PUT appmatriculacioaaj.herokuapp.com/uf/update/{code}</th>
+        </tr>
+        <tr>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>code</td>
+            <td>String</td>
+            <td>Code to update</td>
+        </tr>
+        <tr>
+            <td>body</td>
+            <td>JSON</td>
+            <td>All the data to update</td>
+        </tr>
+    </table>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
+        </tr>
+        <tr>
+            <th colspan="4">GET appmatriculacioaaj.herokuapp.com/uf/update/{code}</th>
+        </tr>
+        <tr>
+            <th>Param</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>500/200</td>
+            <td>Query Stat</td>
+        </tr>
+        <tr>
+            <td>Succes</td>
+            <td>True/False</td>
             <td>Returns all UF's from mp code</td>
         </tr>
     </table>
