@@ -387,6 +387,135 @@
             <td>Returns a MP from a career_id</td>
         </tr>
     </table>
+    </br>
+    <h2>/mps/update/code</h2>
+    <table style="width:100%">
+        <tr>
+            <th colspan="5">Request</th>
+        </tr>
+        <tr>
+            <th colspan="5">PUT appmatriculacioaaj.herokuapp.com/mps/getbycareer/code</th>
+        </tr>
+        <tr>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>code</td>
+            <td>string</td>
+            <td>Searchs from a code of mp</td>
+        </tr>
+    </table>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
+        </tr>
+        <tr>
+            <th colspan="4">PUT appmatriculacioaaj.herokuapp.com/mps/update/code</th>
+        </tr>
+        <tr>
+            <th>Param</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>500/200</td>
+            <td>Query Stat</td>
+        </tr>
+        <tr>
+            <td>Ducces</td>
+            <td>True/False</td>
+            <td>True if the action is correct and false if is wrong</td>
+        </tr>
+    </table>
+    </br>
+    <h2>/mp/delete/code</h2>
+    <table style="width:100%">
+        <tr>
+            <th colspan="5">Request</th>
+        </tr>
+        <tr>
+            <th colspan="5">DELETE appmatriculacioaaj.herokuapp.com/mp/delete/code</th>
+        </tr>
+        <tr>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>code</td>
+            <td>string</td>
+            <td>Searchs and delete from a code of mp</td>
+        </tr>
+    </table>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
+        </tr>
+        <tr>
+            <th colspan="4">DELETE appmatriculacioaaj.herokuapp.com/mp/delete/code</th>
+        </tr>
+        <tr>
+            <th>Param</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>500/200</td>
+            <td>Query Stat</td>
+        </tr>
+        <tr>
+            <td>Succes</td>
+            <td>True/False</td>
+            <td>True if the action is correct and false if it's wrong</td>
+        </tr>
+    </table>
+    </br>
+    <h2>/mps/delete/careercode</h2>
+    <table style="width:100%">
+        <tr>
+            <th colspan="5">Request</th>
+        </tr>
+        <tr>
+            <th colspan="5">DELETE appmatriculacioaaj.herokuapp.com/mps/delete/careercode</th>
+        </tr>
+        <tr>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>code</td>
+            <td>string</td>
+            <td>Searchs and delete all MP's from a career code</td>
+        </tr>
+    </table>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
+        </tr>
+        <tr>
+            <th colspan="4">DELETE appmatriculacioaaj.herokuapp.com/mps/delete/careercode</th>
+        </tr>
+        <tr>
+            <th>Param</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>500/200</td>
+            <td>Query Stat</td>
+        </tr>
+        <tr>
+            <td>Succes</td>
+            <td>True/False</td>
+            <td>True if the action is correct and false if it's wrong</td>
+        </tr>
+    </table>
 </body>
 
 </html>
