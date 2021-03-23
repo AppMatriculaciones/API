@@ -723,7 +723,7 @@
             <th colspan="4">Response</th>
         </tr>
         <tr>
-            <th colspan="4">GET appmatriculacioaaj.herokuapp.com/uf/update/{code}</th>
+            <th colspan="4">PUT appmatriculacioaaj.herokuapp.com/uf/update/{code}</th>
         </tr>
         <tr>
             <th>Param</th>
@@ -738,7 +738,50 @@
         <tr>
             <td>Succes</td>
             <td>True/False</td>
-            <td>Returns all UF's from mp code</td>
+            <td>Returns all UF updated.</td>
+        </tr>
+    </table>
+    </br>
+    <h2>/uf/delete/{code}</h2>
+    <table style="width:100%">
+        <tr>
+            <th colspan="5">Request</th>
+        </tr>
+        <tr>
+            <th colspan="5">DELETE appmatriculacioaaj.herokuapp.com/uf/delete/{code}</th>
+        </tr>
+        <tr>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>code</td>
+            <td>String</td>
+            <td>Code to delete</td>
+        </tr>
+    </table>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
+        </tr>
+        <tr>
+            <th colspan="4">DELETE appmatriculacioaaj.herokuapp.com/uf/delete/{code}</th>
+        </tr>
+        <tr>
+            <th>Param</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>500/200</td>
+            <td>Query Stat</td>
+        </tr>
+        <tr>
+            <td>Succes</td>
+            <td>True/False</td>
+            <td>Returns the delete status.</td>
         </tr>
     </table>
 </body>
