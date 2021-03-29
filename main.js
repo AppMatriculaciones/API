@@ -223,7 +223,6 @@ app.post("/mp/create", (request, response) => {
         newMp.date_start = new Date(date_start);
     }
     let date_end = newMp.date_end;
-    console.log(date_end);
     if(date_end != null){
         newMp.date_end = new Date(date_end);
     }
