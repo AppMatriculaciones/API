@@ -920,7 +920,7 @@
             <th colspan="5">Request (JSON)</th>
         </tr>
         <tr>
-            <th colspan="5">POST appmatriculacioaaj/career/create/</th>
+            <th colspan="5">POST appmatriculacioaaj/student/create/</th>
         </tr>
         <tr>
             <th>Params</th>
@@ -953,11 +953,11 @@
         <tr>
             <td>Code</td>
             <td>string</td>
-            <td>Code from the new career</td>
+            <td>Mongo id from the new student</td>
         </tr>
     </table>
     </br>
-    <h2>/career/delete/code</h2>
+    <h2>/student/delete/bydocid</h2>
     <table style="width:100%">
         <tr>
             <th colspan="5">Request</th>
