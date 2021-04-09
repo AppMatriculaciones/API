@@ -414,10 +414,62 @@ app.delete("/ufs/delete/:mpcode", (request, response) => {
 
 });
 
+//------- ENROLLMENT ENDPOINTS ------//
+
+// Get ufs completadas del usuario
+app.get("/enrollment/getCompletedUfs",(request, response) => {
+    const completedUfs = request.body.ufs;
+    const _token = request.body.token;
+
+    database.collection('students').findOne({token:_token}, (error, student) => {
+        if(error){
+            return response.status(500).json({error: error.message});
+        }
+        if(student == null){
+            response.status(200).json({msg: "No student found with given token."});
+        } else {
+            
+        }
+    }
+});
+
+// Añadir ufs seleccionadas por el usuario
+app.post("/enrollment/addUfs", (request, response) => {
+    const arrayUFS = request.body.ufs;
+    const _token = request.body.token;
+
+    // Encontramos student por su token
+    database.collection('students').findOne({token:_token}, (error, student) => {
+        if(error){
+            return response.status(500).json({error: error.message});
+        }
+        if(student == null){
+            response.status(200).json({msg: "No student found with given token."});
+        }else{
+            // Con el student, cogemos el student_id y lo buscamos en enrollment
+            database.collection('enrollments').findOne({student_id:student._id}, (error, enrollment) =>{
+                if(error){
+                    return response.status(500).json({error: error.message});
+                }
+                if(enrollment == null){
+                    response.status(200).json({msg: "No enrollment found."})
+                } else {
+                    // Insert de las ufs en el enrollment_id
+                    console.log(enrollment._id);
+                    var myquery = { _id: enrollment._id };
+                    var newvalues = { $set: { ufs_id: arrayUFS } };
+                await db.collection('enrollments').updateOne(myquery, newvalues, function(err, res) {
+                    if (err) throw err;
+                        console.log("1 document updated");
+                    });
+                }
+            });
+        }
+    });
 
 /**
  * NOTAS ALEC
- * Promesas -> def
+ * Promesas -> def 
  *          -> imagen
  *          -> connection to mongo
  *          -> careers/get
