@@ -799,9 +799,9 @@
             <th>Description</th>
         </tr>
         <tr>
-            <td>student_id</td>
-            <td>String</td>
-            <td>student_id to achieve his/her completed UFs</td>
+            <td>null</td>
+            <td>null</td>
+            <td>null</td>
         </tr>
     </table>
     <table style="width:100%">
