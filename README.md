@@ -799,9 +799,9 @@
             <th>Description</th>
         </tr>
         <tr>
-            <td>email</td>
+            <td>student_id</td>
             <td>String</td>
-            <td>email to achieve his/her completed UFs</td>
+            <td>student_id to achieve his/her completed UFs</td>
         </tr>
     </table>
     <table style="width:100%">
@@ -827,13 +827,13 @@
             <td>Returns all completed UF's  (null if it hasn't any completed UF)</td>
         </tr>
     </table>
-    <h2>/enrollment/getAllUfs</h2>
+    <h2>/enrollment/getAllMpsUfs</h2>
     <table style="width:100%">
         <tr>
             <th colspan="5">Request</th>
         </tr>
         <tr>
-            <th colspan="5">GET appmatriculacioaaj.herokuapp.com/enrollment/getAllUfs</th>
+            <th colspan="5">GET appmatriculacioaaj.herokuapp.com/enrollment/getAllMpsUfs</th>
         </tr>
         <tr>
             <th>Params</th>
@@ -851,7 +851,7 @@
             <th colspan="4">Response</th>
         </tr>
         <tr>
-            <th colspan="4">GET appmatriculacioaaj.herokuapp.com/enrollment/getAllUfs</th>
+            <th colspan="4">GET appmatriculacioaaj.herokuapp.com/enrollment/getAllMpsUfs</th>
         </tr>
         <tr>
             <th>Param</th>
@@ -866,7 +866,7 @@
         <tr>
             <td>body</td>
             <td>JSON</td>
-            <td>Returns all completed UF's  (null if it hasn't any completed UF)</td>
+            <td>Returns all UF's for a MP</td>
         </tr>
     </table>
     <h2>/enrollment/addUfs</h2>
@@ -875,7 +875,7 @@
             <th colspan="5">Request</th>
         </tr>
         <tr>
-            <th colspan="5">PUT appmatriculacioaaj.herokuapp.com/enrollment/addUfs</th>
+            <th colspan="5">POST appmatriculacioaaj.herokuapp.com/enrollment/addUfs</th>
         </tr>
         <tr>
             <th>Params</th>
@@ -893,7 +893,7 @@
             <th colspan="4">Response</th>
         </tr>
         <tr>
-            <th colspan="4">PUT appmatriculacioaaj.herokuapp.com/enrollment/addUfs</th>
+            <th colspan="4">POST appmatriculacioaaj.herokuapp.com/enrollment/addUfs</th>
         </tr>
         <tr>
             <th>Param</th>
@@ -909,6 +909,138 @@
             <td>body</td>
             <td>JSON</td>
             <td>Returns all UF's enrolled</td>
+        </tr>
+    </table>
+        </br></br>
+    <h1>REQUERIMENTS ENDPOINTS</h1>
+    </table>
+    <h2>/requeriments/addRequeriment</h2>
+    <table style="width:100%">
+        <tr>
+            <th colspan="5">Request</th>
+        </tr>
+        <tr>
+            <th colspan="5">POST appmatriculacioaaj.herokuapp.com/requeriments/addRequeriment</th>
+        </tr>
+        <tr>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>null</td>
+            <td>null</td>
+            <td>null</td>
+        </tr>
+    </table>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
+        </tr>
+        <tr>
+            <th colspan="4">POST appmatriculacioaaj.herokuapp.com/requeriments/addRequeriment</th>
+        </tr>
+        <tr>
+            <th>Param</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>500/200</td>
+            <td>Query Stat</td>
+        </tr>
+        <tr>
+            <td>body</td>
+            <td>JSON</td>
+            <td>Returns the new Requeriment</td>
+        </tr>
+    </table>
+        </br></br>
+        </table>
+    <h2>/requeriments/getAll</h2>
+    <table style="width:100%">
+        <tr>
+            <th colspan="5">Request</th>
+        </tr>
+        <tr>
+            <th colspan="5">GET appmatriculacioaaj.herokuapp.com/requeriments/getAll</th>
+        </tr>
+        <tr>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>null</td>
+            <td>null</td>
+            <td>null</td>
+        </tr>
+    </table>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
+        </tr>
+        <tr>
+            <th colspan="4">GET appmatriculacioaaj.herokuapp.com/requeriments/getAll</th>
+        </tr>
+        <tr>
+            <th>Param</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>500/200</td>
+            <td>Query Stat</td>
+        </tr>
+        <tr>
+            <td>body</td>
+            <td>JSON</td>
+            <td>Returns all Requeriments</td>
+        </tr>
+    </table>
+    </br></br>
+    <h2>/requeriments/getByType/{requerimentType}</h2>
+    <table style="width:100%">
+        <tr>
+            <th colspan="5">Request</th>
+        </tr>
+        <tr>
+            <th colspan="5">GET appmatriculacioaaj.herokuapp.com/requeriments/getByType/{requerimentType}</th>
+        </tr>
+        <tr>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>type</td>
+            <td>String</td>
+            <td>Requeriment Type</td>
+        </tr>
+    </table>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
+        </tr>
+        <tr>
+            <th colspan="4">GET appmatriculacioaaj.herokuapp.com/requeriments/getByType/{requerimentType}</th>
+        </tr>
+        <tr>
+            <th>Param</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>500/200</td>
+            <td>Query Stat</td>
+        </tr>
+        <tr>
+            <td>body</td>
+            <td>JSON</td>
+            <td>Returns one Requeriment</td>
         </tr>
     </table>
         </br></br>
