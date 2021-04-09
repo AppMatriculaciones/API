@@ -13,7 +13,7 @@ const app = express();
 //Defining global variables
 const PORT = process.env.PORT || 5000;
 const CONNECTION_URL = "mongodb+srv://alec:alec@mflix.spncl.mongodb.net/project_online_enrollement?authSource=admin&replicaSet=atlas-5qhdga-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true";
-const DATABASE_NAME = "project_online_enrollement";
+const DATABASE_NAME = "project_online_enrollment_test";
 var database, collection;
 
 //https://stackoverflow.com/questions/39870867/what-does-app-usebodyparser-json-do
@@ -21,29 +21,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 //for corbdoba app can access
 app.use(cors());
-/*
-//Connection to mongodb cluster and getting database
-mongoClient
-    .connect(CONNECTION_URL, {useNewUrlParser: true, useUnifiedTopology: true}, (error, client) =>{
-        if(error) {
-            console.log(console.error());
-        }else{
-            database = client.db(DATABASE_NAME);
-            console.log("Connected to `" + DATABASE_NAME + "`!");
-        }
-    });
-*/
+
 mongoClient
 .connect(CONNECTION_URL, {useNewUrlParser: true, useUnifiedTopology: true})
 .then((client) => {
     console.log("Connected to mongodb.");
     database = client.db(DATABASE_NAME);
+
+    app.listen(PORT, () => {
+        console.log(`Server started at http://localhost:${PORT}`)
+      })
 })
 .catch((err) => console.log(err));
-
-app.listen(PORT, () => {
-  console.log(`Server started at http://localhost:${PORT}`)
-})
 
 // ======== Endpoints ======== //
 
@@ -166,6 +155,15 @@ app.get("/login/admin/:email/:password", (request, response) => {
 app.post("/career/create", (request, response) => {
 
     const newCareer = request.body;
+    let date_start = newCareer.date_start;
+    if(date_start != null){
+        newCareer.date_start = new Date(date_start);
+    }
+    let date_end = newCareer.date_end;
+    if(date_end != null){
+        newCareer.date_end = new Date(date_end);
+    }
+    
     database.collection('careers').insertOne(newCareer).then(result =>{
         if(result.insertedCount == 0){
             response.status(200).json({msg: "Failed insertion."})
@@ -216,7 +214,19 @@ app.delete("/career/delete/:code", (request, response) => {
 //=========== Crud mps ===========//
 
 app.post("/mp/create", (request, response) => {
-    const newMp = request.body;
+    let newMp = request.body;
+    let career_mongo_id = newMp.career_id;
+    newMp.career_id = objectId(career_mongo_id);
+    let date_start = newMp.date_start;
+    
+    if(date_start != null){
+        newMp.date_start = new Date(date_start);
+    }
+    let date_end = newMp.date_end;
+    if(date_end != null){
+        newMp.date_end = new Date(date_end);
+    }
+
     database.collection('mps').insertOne(newMp).then(result =>{
         if(result.insertedCount == 0){
             response.status(200).json({msg: "Failed insertion."})
@@ -291,7 +301,9 @@ app.delete("/mps/delete/:careercode", (request, response) => {
 //=========== Crud ufs ===========//
 
 app.post("/uf/create", (request, response) => {
-    const newUf = request.body;
+    let newUf = request.body;
+    let mp_mongo_id = newUf.mp_id;
+    newUf.mp_id = objectId(mp_mongo_id);
     database.collection('ufs').insertOne(newUf).then(result =>{
         if(result.insertedCount == 0){
             response.status(200).json({msg: "Failed insertion."})
@@ -413,6 +425,7 @@ app.delete("/ufs/delete/:careercode", (request, response) => {
 app.delete("/ufs/delete/:mpcode", (request, response) => {
 
 });
+<<<<<<< HEAD
 
 //------- ENROLLMENT ENDPOINTS ------//
 
@@ -488,3 +501,5 @@ fetch().then(respuesta => {return new Promise((accept, reject) => {  try{ accept
 
 }
 */
+=======
+>>>>>>> 91b4fdef15dbb7d4532e739599afeee88384b68f
