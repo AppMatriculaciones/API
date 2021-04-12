@@ -1089,13 +1089,13 @@
         </tr>
     </table>
     </br>
-    <h2>/student/delete/bydocid</h2>
+    <h2>/student/deletebydocid/docid</h2>
     <table style="width:100%">
         <tr>
             <th colspan="5">Request</th>
         </tr>
         <tr>
-            <th colspan="5">DELETE appmatriculacioaaj/student/updatebydocid/{docid}</th>
+            <th colspan="5">DELETE appmatriculacioaaj/student/deletebydocid/{docid}</th>
         </tr>
         <tr>
             <th>Params</th>
@@ -1113,7 +1113,7 @@
             <th colspan="4">Response</th>
         </tr>
         <tr>
-            <th colspan="4">DELETE appmatriculacioaaj/student/updatebydocid/{code}</th>
+            <th colspan="4">DELETE appmatriculacioaaj/student/deletebydocid/{code}</th>
         </tr>
         <tr>
             <th>Param</th>
@@ -1127,7 +1127,7 @@
     </tr>
     </table>
     </br>
-    <h2>/student/update/docid</h2>
+    <h2>/student/updatebydocid/docid</h2>
     <table style="width:100%">
         <tr>
             <th colspan="5">Request (JSON)</th>
@@ -1165,13 +1165,13 @@
         </tr>
     </table>
     </br>
-    <h2>/student/get/docid</h2>
+    <h2>/student/getbydocid/docid</h2>
     <table style="width:100%">
         <tr>
             <th colspan="5">Request</th>
         </tr>
         <tr>
-            <th colspan="5">GET appmatriculacioaaj/student/get/{docid}</th>
+            <th colspan="5">GET appmatriculacioaaj/student/getbydocid/{docid}</th>
         </tr>
         <tr>
             <th>Params</th>
@@ -1189,7 +1189,7 @@
             <th colspan="4">Response</th>
         </tr>
         <tr>
-            <th colspan="4">GET appmatriculacioaaj/student/get/{docid}</th>
+            <th colspan="4">GET appmatriculacioaaj/student/getbydocid/{docid}</th>
         </tr>
         <tr>
             <th>Param</th>
@@ -1214,7 +1214,7 @@
             <th colspan="5">Request</th>
         </tr>
         <tr>
-            <th colspan="5">GET appmatriculacioaaj/students/get/{careersFilter}</th>
+            <th colspan="5">GET appmatriculacioaaj/students/getbycareers/{careersFilter}</th>
         </tr>
         <tr>
             <th>Params</th>
@@ -1232,7 +1232,7 @@
             <th colspan="4">Response</th>
         </tr>
         <tr>
-            <th colspan="4">GET appmatriculacioaaj/students/get/{careersFilter}</th>
+            <th colspan="4">GET appmatriculacioaaj/students/getbycareers/{careersFilter}</th>
         </tr>
         <tr>
             <th>Param</th>
