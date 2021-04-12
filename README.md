@@ -1046,13 +1046,13 @@
         </br></br>
     <h1>STUDENTS CRUD</h1>
     </br>
-    <h2>/student/create/</h2>
+    <h2>/student/create</h2>
     <table style="width:100%">
         <tr>
             <th colspan="5">Request (JSON)</th>
         </tr>
         <tr>
-            <th colspan="5">POST appmatriculacioaaj/student/create/</th>
+            <th colspan="5">POST appmatriculacioaaj/student/create</th>
         </tr>
         <tr>
             <th>Params</th>
@@ -1070,7 +1070,7 @@
             <th colspan="4">Response</th>
         </tr>
         <tr>
-            <th colspan="4">POST appmatriculacioaaj/student/create/</th>
+            <th colspan="4">POST appmatriculacioaaj/student/create</th>
         </tr>
         <tr>
             <th>Param</th>
@@ -1095,7 +1095,7 @@
             <th colspan="5">Request</th>
         </tr>
         <tr>
-            <th colspan="5">DELETE appmatriculacioaaj/student/delete/{docid}</th>
+            <th colspan="5">DELETE appmatriculacioaaj/student/updatebydocid/{docid}</th>
         </tr>
         <tr>
             <th>Params</th>
@@ -1113,7 +1113,7 @@
             <th colspan="4">Response</th>
         </tr>
         <tr>
-            <th colspan="4">DELETE appmatriculacioaaj/student/delete/{code}</th>
+            <th colspan="4">DELETE appmatriculacioaaj/student/updatebydocid/{code}</th>
         </tr>
         <tr>
             <th>Param</th>
@@ -1133,7 +1133,7 @@
             <th colspan="5">Request (JSON)</th>
         </tr>
         <tr>
-            <th colspan="5">PUT appmatriculacioaaj/student/update/{docId}</th>
+            <th colspan="5">PUT appmatriculacioaaj/student/updatebydocid/{docId}</th>
         </tr>
         <tr>
             <th>Params</th>
@@ -1151,7 +1151,7 @@
             <th colspan="4">Response</th>
         </tr>
         <tr>
-            <th colspan="4">PUT appmatriculacioaaj/student/update/{docid}</th>
+            <th colspan="4">PUT appmatriculacioaaj/student/updatebydocid/{docid}</th>
         </tr>
         <tr>
             <th>Param</th>
@@ -1290,7 +1290,7 @@
         <tr>
             <td>body</td>
             <td>JSON</td>
-            <td>All students data</td>
+            <td>All students' data</td>
         </tr>
     </table>
 </body>
