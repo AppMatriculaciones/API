@@ -1251,7 +1251,7 @@
         </tr>
     </table>
     </br>
-    <h2>/stdudents/get</h2>
+    <h2>/students/get</h2>
     <table style="width:100%">
         <tr>
             <th colspan="5">Request</th>
