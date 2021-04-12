@@ -1251,13 +1251,13 @@
         </tr>
     </table>
     </br>
-    <h2>/stdudents/get/</h2>
+    <h2>/stdudents/get</h2>
     <table style="width:100%">
         <tr>
             <th colspan="5">Request</th>
         </tr>
         <tr>
-            <th colspan="5">GET appmatriculacioaaj/students/get/</th>
+            <th colspan="5">GET appmatriculacioaaj/students/get</th>
         </tr>
         <tr>
             <th>Params</th>
@@ -1275,7 +1275,7 @@
             <th colspan="4">Response</th>
         </tr>
         <tr>
-            <th colspan="4">GET appmatriculacioaaj/students/get/</th>
+            <th colspan="4">GET appmatriculacioaaj/students/get</th>
         </tr>
         <tr>
             <th>Param</th>
@@ -1293,8 +1293,6 @@
             <td>All students data</td>
         </tr>
     </table>
-    
-    </br></br>
 </body>
 
 </html>
