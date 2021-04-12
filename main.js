@@ -438,7 +438,20 @@ app.post("/student/create", (request, response) => {
 
 });
 
-app.get("/students/get/:careersFilter", (request, response) => {
+app.get("/students/get", (request, response) => {
+
+    database.collection('students').find({}).toArray().then((students) => {
+        if (students == null) {
+            response.status(200).json({ msg: "No students found." })
+        } else {
+            response.status(200).json(students);
+        }
+    }).catch((error) => {
+        return response.status(500).json({ error: error.message });
+    });
+});
+
+app.get("/students/getbycareers/:careersFilter", (request, response) => {
 
     const careersSelectedStr = request.params.careersFilter;
     const careersSelected = careersSelectedStr.split('&');
