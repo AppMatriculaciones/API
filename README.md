@@ -804,48 +804,6 @@
             <td>null</td>
         </tr>
     </table>
-    <h2>/enrollment/getAllMpsUfs</h2>
-    <table style="width:100%">
-        <tr>
-            <th colspan="5">Request</th>
-        </tr>
-        <tr>
-            <th colspan="5">GET appmatriculacioaaj.herokuapp.com/enrollment/getAllMpsUfs</th>
-        </tr>
-        <tr>
-            <th>Params</th>
-            <th>Value</th>
-            <th>Description</th>
-        </tr>
-        <tr>
-            <td>emal</td>
-            <td>String</td>
-            <td>email to achieve his/her completed UFs</td>
-        </tr>
-    </table>
-    <table style="width:100%">
-        <tr>
-            <th colspan="4">Response</th>
-        </tr>
-        <tr>
-            <th colspan="4">GET appmatriculacioaaj.herokuapp.com/enrollment/getAllMpsUfs</th>
-        </tr>
-        <tr>
-            <th>Param</th>
-            <th>Value</th>
-            <th>Description</th>
-        </tr>
-        <tr>
-            <td>status</td>
-            <td>500/200</td>
-            <td>Query Stat</td>
-        </tr>
-        <tr>
-            <td>body</td>
-            <td>JSON</td>
-            <td>Returns all UF's for a MP</td>
-        </tr>
-    </table>
     <h2>/enrollment/addUfs</h2>
     <table style="width:100%">
         <tr>
