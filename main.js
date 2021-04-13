@@ -435,7 +435,27 @@ app.delete("/ufs/delete/:mpcode", (request, response) => {
 // ======== crud students ======== //
 
 app.post("/student/create", (request, response) => {
+    const newStudent = request.body;
+    let birthdate = newStudent.birthdate;
+    if (birthdate != null) {
+        newStudent.birthdate = new Date(birthdate);
+    }
+    
+    newStudent.ufs_completed.forEach(uf_completed => {
+        uf_completed = objectId(uf_completed);
+    });
 
+    newStudent.requirements_profile_id = objectId(newStudent.requirements_profile_id);
+
+    database.collection('students').insertOne(newStudent).then(result => {
+        if (result.insertedCount == 0) {
+            response.status(200).json({ msg: "Failed insertion." })
+        } else {
+            response.status(200).json(result.insertedId);
+        }
+    }).catch((error) => {
+        return response.status(500).json({ error: error.message });
+    });
 });
 
 app.get("/students/get", (request, response) => {
@@ -518,4 +538,37 @@ app.put("/student/update/:dni", (request, response) => {
 
 app.delete("/student/delete/:dni", (request, response) => {
 
+});
+
+
+// =================== CRUD ====================//
+app.post("/enrollments/create", (request, response) => {
+    const newEnrollment = request.body;
+
+    let start_date = newEnrollment.start_date;
+    if (start_date != null) {
+        newStudent.start_date = new Date(start_date);
+    }
+    let end_date = newEnrollment.end_date;
+    if (end_date != null) {
+        newEnrollment.end_date = new Date(end_date);
+    }
+    
+    newStudent.ufs_id.forEach(uf_id => {
+        uf_id = objectId(uf_id);
+    });
+
+
+    newEnrollment.career_id = objectId(newEnrollment.career_id);
+    newEnrollment.student_id = objectId(newEnrollment.student_id);
+
+    database.collection('enrollments').insertOne(newEnrollment).then(result => {
+        if (result.insertedCount == 0) {
+            response.status(200).json({ msg: "Failed insertion." })
+        } else {
+            response.status(200).json(result.insertedId);
+        }
+    }).catch((error) => {
+        return response.status(500).json({ error: error.message });
+    });
 });
