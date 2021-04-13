@@ -804,6 +804,29 @@
             <td>null</td>
         </tr>
     </table>
+    <table style="width:100%">
+        <tr>
+            <th colspan="5">Response</th>
+        </tr>
+        <tr>
+            <th colspan="5">GET appmatriculacioaaj.herokuapp.com/enrollment/getCompletedUfs</th>
+        </tr>
+       <tr>
+            <th>Param</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>500/200</td>
+            <td>Query Stat</td>
+        </tr>
+        <tr>
+            <td>body</td>
+            <td>JSON</td>
+            <td>Returns all completed UF's</td>
+        </tr>
+    </table>
     <h2>/enrollment/addUfs</h2>
     <table style="width:100%">
         <tr>
