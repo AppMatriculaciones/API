@@ -541,7 +541,7 @@ app.delete("/student/delete/:dni", (request, response) => {
 });
 
 
-// =================== CRUD ====================//
+// =================== CRUD ENROLLMENTS====================//
 app.post("/enrollments/create", (request, response) => {
     const newEnrollment = request.body;
 
