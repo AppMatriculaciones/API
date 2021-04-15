@@ -416,6 +416,21 @@ app.get("/uf/get/:code", (request, response) => {
 
 });
 
+app.get("/uf/getbyid/:id", (request, response) => {
+
+    const id = new objectId(request.params.id);
+    database.collection('ufs').findOne({ _id: id }, (error, uf) => {
+        if (error) {
+            return response.status(500).json({ error: error.message });
+        }
+        if (uf == null) {
+            response.status(200).json({ msg: "No uf found." })
+        } else {
+            response.status(200).json(uf);
+        }
+    });
+});
+
 app.put("/uf/update/:code", (request, response) => {
 
 });
