@@ -13,7 +13,7 @@ const app = express();
 //Defining global variables
 const PORT = process.env.PORT || 5000;
 const CONNECTION_URL = "mongodb+srv://alec:alec@mflix.spncl.mongodb.net/project_online_enrollement?authSource=admin&replicaSet=atlas-5qhdga-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true";
-const DATABASE_NAME = "project_online_enrollment_test";
+const DATABASE_NAME = "project_online_enrollement";
 var database, collection;
 
 //https://stackoverflow.com/questions/39870867/what-does-app-usebodyparser-json-do
@@ -203,6 +203,22 @@ app.get("/career/get/:code", (request, response) => {
     });
 });
 
+app.get("/career/getbyid/:id", (request, response) => {
+
+    const _id = request.params.id;
+
+    database.collection('careers').findOne({_id : objectId(_id)}, (error, career) => {
+        if(error){
+            return response.status(500).json({error: error.message});
+        }
+        if(career == null){
+            response.status(200).json({msg: "No career found."})
+        }else{
+            response.status(200).json(career);
+        }
+    });
+});
+
 app.put("/career/update/:code", (request, response) => {
 
 });
@@ -345,7 +361,8 @@ app.get("/ufs/getbycareer/:careercode", (request, response) => {
                 duration: 1,
                 isProject: 1,
                 isFct: 1,
-                isLanguage: 1
+                isLanguage: 1,
+                mp_id:1
                 } 
         }
      ]).toArray().then((ufs) =>{
@@ -425,32 +442,48 @@ app.delete("/ufs/delete/:careercode", (request, response) => {
 app.delete("/ufs/delete/:mpcode", (request, response) => {
 
 });
-<<<<<<< HEAD
 
 //------- ENROLLMENT ENDPOINTS ------//
 
 // Get ufs completadas del usuario
 app.get("/enrollment/getCompletedUfs",(request, response) => {
-    const completedUfs = request.body.ufs;
     const _token = request.body.token;
 
-    database.collection('students').findOne({token:_token}, (error, student) => {
-        if(error){
-            return response.status(500).json({error: error.message});
+    database.collection('students').aggregate([
+        {
+            $lookup:
+            {
+                from: 'ufs',
+                localField: 'ufs_completed',
+                foreignField: '_id',
+                as: 'completed_ufs'
+            }
+       },
+       { $match: { token: '' } },
+       { 
+            $project: {
+                    _id : 0,
+                    completed_ufs : 1
+            } 
         }
-        if(student == null){
-            response.status(200).json({msg: "No student found with given token."});
-        } else {
-            
+     ]).toArray().then((students) =>{
+        if(students == null){
+            response.status(200).json({msg: "No students found."})
+        }else{
+            response.status(200).json(students);
         }
-    }
+    }).catch((error) => {
+        return response.status(500).json({error: error.message});
+    });
 });
 
 // Añadir ufs seleccionadas por el usuario
-app.post("/enrollment/addUfs", (request, response) => {
-    const arrayUFS = request.body.ufs;
+app.post("/enrollment/addufs", (request, response) => {
+    let arrayUFS = request.body.ufs;
+    for(i = 0; i <= arrayUFS.length - 1; i++){
+        arrayUFS[i] = new objectId(arrayUFS[i]);
+    }
     const _token = request.body.token;
-
     // Encontramos student por su token
     database.collection('students').findOne({token:_token}, (error, student) => {
         if(error){
@@ -460,7 +493,7 @@ app.post("/enrollment/addUfs", (request, response) => {
             response.status(200).json({msg: "No student found with given token."});
         }else{
             // Con el student, cogemos el student_id y lo buscamos en enrollment
-            database.collection('enrollments').findOne({student_id:student._id}, (error, enrollment) =>{
+            database.collection('enrollments').findOne({student_id: objectId(student._id)}, (error, enrollment) =>{
                 if(error){
                     return response.status(500).json({error: error.message});
                 }
@@ -468,18 +501,19 @@ app.post("/enrollment/addUfs", (request, response) => {
                     response.status(200).json({msg: "No enrollment found."})
                 } else {
                     // Insert de las ufs en el enrollment_id
-                    console.log(enrollment._id);
-                    var myquery = { _id: enrollment._id };
+                    var myquery = { _id: objectId(enrollment._id) };
                     var newvalues = { $set: { ufs_id: arrayUFS } };
-                await db.collection('enrollments').updateOne(myquery, newvalues, function(err, res) {
-                    if (err) throw err;
-                        console.log("1 document updated");
+                    database.collection('enrollments').updateOne(myquery, newvalues, function(error, res) {
+                        if (error){
+                            throw error;
+                        }
+                        response.status(200).json({ msg: res.result.nModified+" documents modified"});
                     });
                 }
             });
         }
     });
-
+});
 /**
  * NOTAS ALEC
  * Promesas -> def 
@@ -501,5 +535,3 @@ fetch().then(respuesta => {return new Promise((accept, reject) => {  try{ accept
 
 }
 */
-=======
->>>>>>> 91b4fdef15dbb7d4532e739599afeee88384b68f
