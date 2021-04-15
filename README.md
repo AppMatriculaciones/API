@@ -841,9 +841,9 @@
             <th>Description</th>
         </tr>
         <tr>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
+            <td>body</td>
+            <td>json</td>
+            <td>2 required parameters, token (user token) and UF's (user enrolling UF's)</td>
         </tr>
     </table>
     <table style="width:100%">
