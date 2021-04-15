@@ -866,7 +866,7 @@
         <tr>
             <td>body</td>
             <td>JSON</td>
-            <td>Returns all UF's enrolled</td>
+            <td>Total of modified documents</td>
         </tr>
     </table>
         </br></br>
