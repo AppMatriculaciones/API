@@ -435,15 +435,15 @@ app.delete("/ufs/delete/:mpcode", (request, response) => {
 // ======== crud students ======== //
 
 app.post("/student/create", (request, response) => {
-    const newStudent = request.body;
-    let birthdate = newStudent.birthdate;
-    if (birthdate != null) {
-        newStudent.birthdate = new Date(birthdate);
+    let newStudent = request.body;
+    let birthday = newStudent.birthday;
+    if (birthday != null) {
+        newStudent.birthday = new Date(birthday);
     }
     
-    newStudent.ufs_completed.forEach(uf_completed => {
-        uf_completed = objectId(uf_completed);
-    });
+    for(i = 0; i <= newStudent.ufs_completed.length - 1; i++){
+        newStudent.ufs_completed[i] = new objectId(newStudent.ufs_completed[i]);
+    }
 
     newStudent.requirements_profile_id = objectId(newStudent.requirements_profile_id);
 
@@ -528,12 +528,31 @@ app.get("/student/getbydocid/:docId", (request, response) => {
     });
 });
 
-app.get("/students/get/:name", (request, response) => {
+app.put("/student/updatebydocid/:docId", (request, response) => {
+    const docId = request.params.docId;
+    let updatedStudent = request.body;
 
-});
+    let birthday = updatedStudent.birthday;
+    if (birthday != null) {
+        updatedStudent.birthday = new Date(birthday);
+    }
+    
+    for(i = 0; i <= updatedStudent.ufs_completed.length - 1; i++){
+        updatedStudent.ufs_completed[i] = new objectId(updatedStudent.ufs_completed[i]);
+    }
 
-app.put("/student/update/:dni", (request, response) => {
+    updatedStudent.requirements_profile_id = objectId(updatedStudent.requirements_profile_id);
 
+    database.collection('students').replaceOne({ 'document_id.id': docId }, updatedStudent, (error, resultUpdate) => {
+        if (error) {
+            return response.status(500).json({ error: error.message });
+        }
+        if (resultUpdate.modifiedCount == 0) {
+            response.status(200).json({ msg: "No student updated." })
+        } else {
+            response.status(200).json({ 'number of documents updated': resultUpdate.modifiedCount});
+        }
+    });
 });
 
 app.delete("/student/delete/:dni", (request, response) => {
@@ -542,23 +561,23 @@ app.delete("/student/delete/:dni", (request, response) => {
 
 
 // =================== CRUD ENROLLMENTS====================//
-app.post("/enrollments/create", (request, response) => {
-    const newEnrollment = request.body;
+
+app.post("/enrollment/create", (request, response) => {
+    let newEnrollment = request.body;
 
     let start_date = newEnrollment.start_date;
     if (start_date != null) {
-        newStudent.start_date = new Date(start_date);
+        newEnrollment.start_date = new Date(start_date);
     }
     let end_date = newEnrollment.end_date;
     if (end_date != null) {
         newEnrollment.end_date = new Date(end_date);
     }
     
-    newStudent.ufs_id.forEach(uf_id => {
-        uf_id = objectId(uf_id);
-    });
-
-
+    for(i = 0; i <= newEnrollment.ufs_id.length - 1; i++){
+        newEnrollment.ufs_id[i] = new objectId(newEnrollment.ufs_id[i]);
+    }
+    
     newEnrollment.career_id = objectId(newEnrollment.career_id);
     newEnrollment.student_id = objectId(newEnrollment.student_id);
 
@@ -570,5 +589,23 @@ app.post("/enrollments/create", (request, response) => {
         }
     }).catch((error) => {
         return response.status(500).json({ error: error.message });
+    });
+});
+
+
+// =============== CRUD REQUIREMENTS ============= //
+
+app.get("/requirements_profile/getbyid/:id", (request, response) => {
+
+    const id = new objectId(request.params.id);
+    database.collection('requirements_profile').findOne({ '_id': id }, (error, requirements_profile) => {
+        if (error) {
+            return response.status(500).json({ error: error.message });
+        }
+        if (requirements_profile == null) {
+            response.status(200).json({ msg: "No requirements profile found." })
+        } else {
+            response.status(200).json(requirements_profile);
+        }
     });
 });
