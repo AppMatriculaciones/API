@@ -624,3 +624,16 @@ app.get("/requirements_profile/getbyid/:id", (request, response) => {
         }
     });
 });
+
+app.get("/requirements_profile/get", (request, response) => {
+
+    database.collection('requirements_profile').find({}).toArray().then((reqProfiles) => {
+        if (reqProfiles == null) {
+            response.status(200).json({ msg: "No requirements profile found." })
+        } else {
+            response.status(200).json(reqProfiles);
+        }
+    }).catch((error) => {
+        return response.status(500).json({ error: error.message });
+    });
+});
