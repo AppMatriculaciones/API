@@ -607,6 +607,53 @@ app.post("/enrollment/create", (request, response) => {
     });
 });
 
+app.get("/enrollment/getbystudentid/:id", (request, response) => {
+
+    const id = new objectId(request.params.id);
+    database.collection('enrollments').findOne({ 'student_id': id }, (error, enrollement) => {
+        if (error) {
+            return response.status(500).json({ error: error.message });
+        }
+        if (enrollement == null) {
+            response.status(200).json({ msg: "No enrollement found." })
+        } else {
+            response.status(200).json(enrollement);
+        }
+    });
+});
+
+app.put("/enrollment/updatebyid/:id", (request, response) => {
+    const id = new objectId(request.params.id);
+    let updatedEnrollment = request.body;
+
+    let start_date = updatedEnrollment.start_date;
+    if (start_date != null) {
+        updatedEnrollment.start_date = new Date(start_date);
+    }
+    let end_date = updatedEnrollment.end_date;
+    if (end_date != null) {
+        updatedEnrollment.end_date = new Date(end_date);
+    }
+    
+    for(i = 0; i <= updatedEnrollment.ufs_id.length - 1; i++){
+        updatedEnrollment.ufs_id[i] = new objectId(updatedEnrollment.ufs_id[i]);
+    }
+
+    updatedEnrollment.student_id = objectId(updatedEnrollment.student_id);
+    updatedEnrollment.career_id = objectId(updatedEnrollment.career_id);
+
+    database.collection('enrollments').replaceOne({ '_id': id }, updatedEnrollment, (error, resultUpdate) => {
+        if (error) {
+            return response.status(500).json({ error: error.message });
+        }
+        if (resultUpdate.modifiedCount == 0) {
+            response.status(200).json({ msg: "No enrollement updated." })
+        } else {
+            response.status(200).json({ 'number of documents updated': resultUpdate.modifiedCount});
+        }
+    });
+});
+
 
 // =============== CRUD REQUIREMENTS ============= //
 
@@ -650,4 +697,11 @@ app.get("/requirements_profile/get", (request, response) => {
     }).catch((error) => {
         return response.status(500).json({ error: error.message });
     });
+});
+
+//=========== CRUD DOCUMENTS ==============//
+
+app.get('/document/get/:fileName', (request, response) =>{
+    const fileName = request.params.fileName;
+    response.sendFile(__dirname + '/uploads/'+fileName);
 });
