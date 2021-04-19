@@ -75,7 +75,7 @@ app.get("/login/student/:email/:password", (request, response) => {
     const email = request.params.email;
     const password = request.params.password;
     const hashedPassword = md5(password);
-    database.collection('students').findOne({ email: email, password: hashedPassword }, (error, student) => {
+    database.collection('students').findOne({ email: email, password: hashedPassword }, function(error, student) {
         if (error) {
             return response.status(500).json({ error: error.message });
         }
@@ -92,6 +92,7 @@ app.get("/login/student/:email/:password", (request, response) => {
                     token: token
                 }
             });
+            student.token = token;
             response.status(200).json(student);
         }
     });
@@ -203,8 +204,51 @@ app.get("/career/get/:code", (request, response) => {
     });
 });
 
-app.put("/career/update/:code", (request, response) => {
+app.get("/career/getbyid/:id", (request, response) => {
 
+    const _id = request.params.id;
+
+    database.collection('careers').findOne({_id : objectId(_id)}, (error, career) => {
+        if(error){
+            return response.status(500).json({error: error.message});
+        }
+        if(career == null){
+            response.status(200).json({msg: "No career found."})
+        }else{
+            response.status(200).json(career);
+        }
+    });
+});
+
+app.get("/career/getbystudenttoken/:token", (request, response) => {
+
+    const _token = request.params.token;
+
+    // Encontramos student por su token
+    database.collection('students').findOne({token:_token}, (error, student) => {
+        if(error){
+            return response.status(500).json({error: error.message});
+        }
+        if(student == null){
+            response.status(200).json({msg: "No student found with given token."});
+        }else{
+            // Con el student, cogemos el student_id y lo buscamos en enrollment
+            database.collection('enrollments').findOne({student_id: objectId(student._id)}, (error, enrollment) =>{
+                if(error){
+                    return response.status(500).json({error: error.message});
+                }
+                if(enrollment == null){
+                    response.status(200).json({msg: "No enrollment found."})
+                } else {
+                    response.status(200).json({msg:enrollment.career_id})
+                }
+            });
+        }
+    });
+});
+
+app.put("/career/update/:code", (request, response) => {
+    
 });
 
 app.delete("/career/delete/:code", (request, response) => {
@@ -350,7 +394,8 @@ app.get("/ufs/getbycareer/:careercode", (request, response) => {
                 duration: 1,
                 isProject: 1,
                 isFct: 1,
-                isLanguage: 1
+                isLanguage: 1,
+                mp_id:1
             }
         }
     ]).toArray().then((ufs) => {
@@ -445,6 +490,78 @@ app.delete("/ufs/delete/:careercode", (request, response) => {
 
 app.delete("/ufs/delete/:mpcode", (request, response) => {
 
+});
+
+//------- ENROLLMENT ENDPOINTS ------//
+
+// Get ufs completadas del usuario
+app.get("/enrollment/getCompletedUfs",(request, response) => {
+    const _token = request.body.token;
+
+    database.collection('students').aggregate([
+        {
+            $lookup:
+            {
+                from: 'ufs',
+                localField: 'ufs_completed',
+                foreignField: '_id',
+                as: 'completed_ufs'
+            }
+       },
+       { $match: { token: '' } },
+       { 
+            $project: {
+                    _id : 0,
+                    completed_ufs : 1
+            } 
+        }
+     ]).toArray().then((students) =>{
+        if(students == null){
+            response.status(200).json({msg: "No students found."})
+        }else{
+            response.status(200).json(students.completed_ufs);
+        }
+    }).catch((error) => {
+        return response.status(500).json({error: error.message});
+    });
+});
+
+// Añadir ufs seleccionadas por el usuario
+app.post("/enrollment/addufs", (request, response) => {
+    let arrayUFS = request.body.ufs;
+    for(i = 0; i <= arrayUFS.length - 1; i++){
+        arrayUFS[i] = new objectId(arrayUFS[i]);
+    }
+    const _token = request.body.token;
+    // Encontramos student por su token
+    database.collection('students').findOne({token:_token}, (error, student) => {
+        if(error){
+            return response.status(500).json({error: error.message});
+        }
+        if(student == null){
+            response.status(200).json({msg: "No student found with given token."});
+        }else{
+            // Con el student, cogemos el student_id y lo buscamos en enrollment
+            database.collection('enrollments').findOne({student_id: objectId(student._id)}, (error, enrollment) =>{
+                if(error){
+                    return response.status(500).json({error: error.message});
+                }
+                if(enrollment == null){
+                    response.status(200).json({msg: "No enrollment found."})
+                } else {
+                    // Insert de las ufs en el enrollment_id
+                    var myquery = { _id: objectId(enrollment._id) };
+                    var newvalues = { $set: { ufs_id: arrayUFS } };
+                    database.collection('enrollments').updateOne(myquery, newvalues, function(error, res) {
+                        if (error){
+                            throw error;
+                        }
+                        response.status(200).json({ msg: res.result.nModified+" documents modified"});
+                    });
+                }
+            });
+        }
+    });
 });
 
 // ======== crud students ======== //
@@ -625,15 +742,47 @@ app.get("/requirements_profile/getbyid/:id", (request, response) => {
     });
 });
 
-app.get("/requirements_profile/get", (request, response) => {
+app.get("/requirements_profile/getall", (request, response) => {
 
-    database.collection('requirements_profile').find({}).toArray().then((reqProfiles) => {
-        if (reqProfiles == null) {
-            response.status(200).json({ msg: "No requirements profile found." })
+    database.collection('requirements_profile').find({}).toArray().then((profile) => {
+        if (profile == null) {
+            response.status(200).json({ msg: "No requeriment profiles found." })
         } else {
-            response.status(200).json(reqProfiles);
+            response.status(200).json(profile);
         }
     }).catch((error) => {
         return response.status(500).json({ error: error.message });
     });
 });
+
+// =================== UPLOADS PHOTOS ======================
+
+/*app.post("/uploadphoto", (request, response) => {
+
+    database.collection
+    }).catch((error) => {
+        return response.status(500).json({ error: error.message });
+    });
+});*/
+
+/**
+ * NOTAS ALEC
+ * Promesas -> def 
+ *          -> imagen
+ *          -> connection to mongo
+ *          -> careers/get
+ * 
+ * Request -> parametros postman?
+ *         -> parametros como generarlos java?
+ *         -> body como generarlo en java?
+ *         -> docu api
+ * 
+ * Token -> def
+ *       -> como generarlo y usarlo?
+ */
+/*try{
+fetch().then(respuesta => {return new Promise((accept, reject) => {  try{ accept(JSON.parse(respuesta.data))} catch {reject(XXX)} }).then(respuestaJSON => ...fetch.).catch
+}catch {
+
+}
+*/
