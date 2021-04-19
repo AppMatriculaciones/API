@@ -75,7 +75,7 @@ app.get("/login/student/:email/:password", (request, response) => {
     const email = request.params.email;
     const password = request.params.password;
     const hashedPassword = md5(password);
-    database.collection('students').findOne({ email: email, password: hashedPassword }, (error, student) => {
+    database.collection('students').findOne({ email: email, password: hashedPassword }, function(error, student) {
         if (error) {
             return response.status(500).json({ error: error.message });
         }
@@ -92,6 +92,7 @@ app.get("/login/student/:email/:password", (request, response) => {
                     token: token
                 }
             });
+            student.token = token;
             response.status(200).json(student);
         }
     });
@@ -219,8 +220,35 @@ app.get("/career/getbyid/:id", (request, response) => {
     });
 });
 
-app.put("/career/update/:code", (request, response) => {
+app.get("/career/getbystudenttoken/:token", (request, response) => {
 
+    const _token = request.params.token;
+
+    // Encontramos student por su token
+    database.collection('students').findOne({token:_token}, (error, student) => {
+        if(error){
+            return response.status(500).json({error: error.message});
+        }
+        if(student == null){
+            response.status(200).json({msg: "No student found with given token."});
+        }else{
+            // Con el student, cogemos el student_id y lo buscamos en enrollment
+            database.collection('enrollments').findOne({student_id: objectId(student._id)}, (error, enrollment) =>{
+                if(error){
+                    return response.status(500).json({error: error.message});
+                }
+                if(enrollment == null){
+                    response.status(200).json({msg: "No enrollment found."})
+                } else {
+                    response.status(200).json({msg:enrollment.career_id})
+                }
+            });
+        }
+    });
+});
+
+app.put("/career/update/:code", (request, response) => {
+    
 });
 
 app.delete("/career/delete/:code", (request, response) => {
@@ -476,7 +504,7 @@ app.get("/enrollment/getCompletedUfs",(request, response) => {
         if(students == null){
             response.status(200).json({msg: "No students found."})
         }else{
-            response.status(200).json(students);
+            response.status(200).json(students.completed_ufs);
         }
     }).catch((error) => {
         return response.status(500).json({error: error.message});
@@ -698,6 +726,30 @@ app.get("/requirements_profile/getbyid/:id", (request, response) => {
         }
     });
 });
+
+app.get("/requirements_profile/getall", (request, response) => {
+
+    database.collection('requirements_profile').find({}).toArray().then((profile) => {
+        if (profile == null) {
+            response.status(200).json({ msg: "No requeriment profiles found." })
+        } else {
+            response.status(200).json(profile);
+        }
+    }).catch((error) => {
+        return response.status(500).json({ error: error.message });
+    });
+});
+
+// =================== UPLOADS PHOTOS ======================
+
+/*app.post("/uploadphoto", (request, response) => {
+
+    database.collection
+    }).catch((error) => {
+        return response.status(500).json({ error: error.message });
+    });
+});*/
+
 /**
  * NOTAS ALEC
  * Promesas -> def 
