@@ -260,13 +260,13 @@
         </tr>
     </table>
     </br>
-    <h2>/career/readOne/code</h2>
+    <h2>/career/get/:code</h2>
     <table style="width:100%">
         <tr>
             <th colspan="5">Request</th>
         </tr>
         <tr>
-            <th colspan="5">GET appmatriculacioaaj/career/readOne/{code}</th>
+            <th colspan="5">GET appmatriculacioaaj/career/get/{code}</th>
         </tr>
         <tr>
             <th>Params</th>
@@ -284,7 +284,7 @@
             <th colspan="4">Response</th>
         </tr>
         <tr>
-            <th colspan="4">GET appmatriculacioaaj/career/readOne/{code}</th>
+            <th colspan="4">GET appmatriculacioaaj/career/get/{code}</th>
         </tr>
         <tr>
             <th>Param</th>
@@ -302,14 +302,103 @@
             <td>All career data.</td>
         </tr>
     </table>
+    <h5>{RETURN: _id, code, name, hours, date_start, date_end, family, isDual, code_educational}</h5>
     </br>
-    <h2>/career/readAll/</h2>
+    <h2>/career/getbyid/:id</h2>
     <table style="width:100%">
         <tr>
             <th colspan="5">Request</th>
         </tr>
         <tr>
-            <th colspan="5">GET appmatriculacioaaj/career/readAll/</th>
+            <th colspan="5">GET appmatriculacioaaj/career/getbyid/{id}</th>
+        </tr>
+        <tr>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>cose</td>
+            <td>string</td>
+            <td>Code to read</td>
+        </tr>
+    </table>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
+        </tr>
+        <tr>
+            <th colspan="4">GET appmatriculacioaaj/career/getbyid/{id}</th>
+        </tr>
+        <tr>
+            <th>Param</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>500/200</td>
+            <td>Query Stat</td>
+        </tr>
+        <tr>
+            <td>body</td>
+            <td>JSON</td>
+            <td>All career data.</td>
+        </tr>
+    </table>
+    <h5>{RETURN: _id, code, name, hours, date_start, date_end, family, isDual, code_educational}</h5>
+    </br>
+    <h2>/career/getbystudenttoken/:token</h2>
+    <table style="width:100%">
+        <tr>
+            <th colspan="5">Request</th>
+        </tr>
+        <tr>
+            <th colspan="5">GET appmatriculacioaaj/career/getbystudenttoken/{token}</th>
+        </tr>
+        <tr>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>cose</td>
+            <td>string</td>
+            <td>Code to read</td>
+        </tr>
+    </table>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
+        </tr>
+        <tr>
+            <th colspan="4">GET appmatriculacioaaj/career/getbystudenttoken/{token}</th>
+        </tr>
+        <tr>
+            <th>Param</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>500/200</td>
+            <td>Query Stat</td>
+        </tr>
+        <tr>
+            <td>body</td>
+            <td>JSON</td>
+            <td>All career data.</td>
+        </tr>
+    </table>
+    <h5>{RETURN: career_id}</h5>
+    </br>
+    <h2>/career/get</h2>
+    <table style="width:100%">
+        <tr>
+            <th colspan="5">Request</th>
+        </tr>
+        <tr>
+            <th colspan="5">GET appmatriculacioaaj/career/get</th>
         </tr>
         <tr>
             <th>Params</th>
@@ -327,7 +416,7 @@
             <th colspan="4">Response</th>
         </tr>
         <tr>
-            <th colspan="4">GET appmatriculacioaaj/career/readAll/</th>
+            <th colspan="4">GET appmatriculacioaaj/career/get</th>
         </tr>
         <tr>
             <th>Param</th>
@@ -342,10 +431,10 @@
         <tr>
             <td>body</td>
             <td>JSON</td>
-            <td>Returns an ID and Name from a career</td>
+            <td>Returns all careers</td>
         </tr>
     </table>
-    <h5>RETURN: {"Status":200, "_id":128370293849723084, "name": "Desenvolupament d'Aplicacions Multiplataforma"}</h5>
+    <h5>{RETURN: _id, code, name, hours, date_start, date_end, family, isDual, code_educational}</h5>
     </br></br>
     <h1>MP's CRUD</h1>
     </br>
