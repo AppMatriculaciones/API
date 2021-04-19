@@ -438,13 +438,13 @@
     </br></br>
     <h1>MP's CRUD</h1>
     </br>
-    <h2>/mps/getbycareer/code</h2>
+    <h2>/mps/getbycareer/:careercode</h2>
     <table style="width:100%">
         <tr>
             <th colspan="5">Request</th>
         </tr>
         <tr>
-            <th colspan="5">GET appmatriculacioaaj.herokuapp.com/mps/getbycareer/code</th>
+            <th colspan="5">GET appmatriculacioaaj.herokuapp.com/mps/getbycareer/:careercode</th>
         </tr>
         <tr>
             <th>Params</th>
@@ -462,7 +462,7 @@
             <th colspan="4">Response</th>
         </tr>
         <tr>
-            <th colspan="4">GET appmatriculacioaaj.herokuapp.com/mps/getbycareer/code</th>
+            <th colspan="4">GET appmatriculacioaaj.herokuapp.com/mps/getbycareer/:careercode</th>
         </tr>
         <tr>
             <th>Param</th>
@@ -477,17 +477,61 @@
         <tr>
             <td>body</td>
             <td>JSON</td>
-            <td>Returns a MP from a career_id</td>
+            <td>Returns all MP's from a careercode</td>
         </tr>
     </table>
+    <h5>{RETURN: _id, code, name, duration_min, duration_max, date_start, date_end, career_id}</h5>
     </br>
-    <h2>/mps/update/code</h2>
+    <h2>/mp/get/:code</h2>
     <table style="width:100%">
         <tr>
             <th colspan="5">Request</th>
         </tr>
         <tr>
-            <th colspan="5">PUT appmatriculacioaaj.herokuapp.com/mps/getbycareer/code</th>
+            <th colspan="5">GET appmatriculacioaaj.herokuapp.com/mp/get/:code</th>
+        </tr>
+        <tr>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>code</td>
+            <td>string</td>
+            <td>Searchs from a code of career</td>
+        </tr>
+    </table>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
+        </tr>
+        <tr>
+            <th colspan="4">GET appmatriculacioaaj.herokuapp.com/mp/get/:code</th>
+        </tr>
+        <tr>
+            <th>Param</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>500/200</td>
+            <td>Query Stat</td>
+        </tr>
+        <tr>
+            <td>body</td>
+            <td>JSON</td>
+            <td>Returns an MP from a MP code</td>
+        </tr>
+    </table>
+    <h5>{RETURN: _id, code, name, duration_min, duration_max, date_start, date_end, career_id}</h5>
+    <h2>/mp/update/code</h2>
+    <table style="width:100%">
+        <tr>
+            <th colspan="5">Request</th>
+        </tr>
+        <tr>
+            <th colspan="5">PUT appmatriculacioaaj.herokuapp.com/mp/update/code</th>
         </tr>
         <tr>
             <th>Params</th>
@@ -505,7 +549,7 @@
             <th colspan="4">Response</th>
         </tr>
         <tr>
-            <th colspan="4">PUT appmatriculacioaaj.herokuapp.com/mps/update/code</th>
+            <th colspan="4">PUT appmatriculacioaaj.herokuapp.com/mp/update/code</th>
         </tr>
         <tr>
             <th>Param</th>
@@ -696,6 +740,7 @@
             <td>Returns all UF's from career code</td>
         </tr>
     </table>
+    <h5>{RETURN: _id, code, name, duration, isProject, isSintesi, isFct, isLanguage, mp_id}</h5>
     </br>
     <h2>/uf/getbymp/{mpcode}</h2>
     <table style="width:100%">
@@ -739,6 +784,7 @@
             <td>Returns all UF's from mp code</td>
         </tr>
     </table>
+    <h5>{RETURN: _id, code, name, duration, isProject, isSintesi, isFct, isLanguage, mp_id}</h5>
     </br>
     <h2>/uf/get/{code}</h2>
     <table style="width:100%">
@@ -782,6 +828,7 @@
             <td>Returns all UF's from code</td>
         </tr>
     </table>
+    <h5>{RETURN: _id, code, name, duration, isProject, isSintesi, isFct, isLanguage, mp_id}</h5>
     </br>
     <h2>/uf/update/{code}</h2>
     <table style="width:100%">
@@ -916,6 +963,8 @@
             <td>Returns all completed UF's</td>
         </tr>
     </table>
+    <h5>{RETURN: students.completed_ufs}</h5>
+    <br>
     <h2>/enrollment/addUfs</h2>
     <table style="width:100%">
         <tr>
@@ -958,7 +1007,8 @@
             <td>Returns all UF's enrolled</td>
         </tr>
     </table>
-        </br></br>
+    <h5>{RETURN: "X modified documents"}</h5>
+    </br>
     <h1>REQUERIMENTS ENDPOINTS</h1>
     </table>
     <h2>/requeriments/addRequeriment</h2>
@@ -1231,6 +1281,8 @@
             <td>Student's document id to be fetched</td>
         </tr>
     </table>
+    <h5>{RETURN: _id, name, first_surname, second_surname, email, password, token, phone, ufs_completed(ARRAY), ralc_id, document_id(ARRAY), birthday, address(ARRAY), birthplace(ARRAY), sex, tutors(ARRAY), former_studies(ARRAY), languages}</h5>
+    <br>
     <table style="width:100%">
         <tr>
             <th colspan="4">Response</th>
@@ -1297,6 +1349,7 @@
             <td>Students' data.</td>
         </tr>
     </table>
+    <h5>{RETURN: name, first_surname, second_surname, email, password, token, phone, ufs_completed(ARRAY), ralc_id, document_id(ARRAY), birthday, address(ARRAY), birthplace(ARRAY), sex, tutors(ARRAY), former_studies(ARRAY), languages}</h5>
     </br>
     <h2>/students/get</h2>
     <table style="width:100%">
@@ -1340,6 +1393,8 @@
             <td>All students' data</td>
         </tr>
     </table>
+    <h5>{RETURN: _id, name, first_surname, second_surname, email, password, token, phone, ufs_completed(ARRAY), ralc_id, document_id(ARRAY), birthday, address(ARRAY), birthplace(ARRAY), sex, tutors(ARRAY), former_studies(ARRAY), languages}</h5>
+    <br>
 </body>
 
 </html>
