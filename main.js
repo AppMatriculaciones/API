@@ -727,6 +727,20 @@ app.post("/enrollment/create", (request, response) => {
 
 // =============== CRUD REQUIREMENTS ============= //
 
+app.post("/requirements_profile/create", (request, response) => {
+    let newReqProfile = request.body;
+
+    database.collection('requirements_profile').insertOne(newReqProfile).then(result => {
+        if (result.insertedCount == 0) {
+            response.status(200).json({ msg: "Failed insertion." })
+        } else {
+            response.status(200).json(result.insertedId);
+        }
+    }).catch((error) => {
+        return response.status(500).json({ error: error.message });
+    });
+});
+
 app.get("/requirements_profile/getbyid/:id", (request, response) => {
 
     const id = new objectId(request.params.id);
