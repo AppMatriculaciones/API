@@ -308,27 +308,15 @@ app.get("/mp/get/:code", (request, response) => {
 });
 
 app.put("/mp/update/:code", (request, response) => {
-    var _code = request.params.code;
-    let mpObj = request.body;
-    database.collection('mps').findOne({code:_code}, (error, mp) => {
+    
+    var myquery = {code: request.params.code};
+    var mpObj = request.body.mp;
+    database.collection('mps').updateOne(myquery, mpObj, (error, res) => {
         if (error){
             response.status(500).json({ err: error});
         }
-        if(mp == null){
-            response.status(200).json({ msg: "MP not found by code"});
-        } else {
-            database.collection('mps').updateOne({code:mp.code}, {$set:{mpObj}}, (error, res) => {
-                if (error){
-                    response.status(500).json({ err: error});
-                }
-                if(res == null){
-                    response.status(200).json({ msg: "Nothing updated"});
-                } else {
-                    response.status(200).json({ msg: "succesfull"});
-                }
-            });
-        }
-    });    
+        response.status(200).json({ msg: res.result.nModified+" documents modified"});
+    }); 
 });
 
 app.delete("/mp/delete/:code", (request, response) => {
@@ -817,7 +805,7 @@ app.get("/requirements_profile/getbyid/:id", (request, response) => {
     });
 });
 
-app.get("/requirements_profile/get", (request, response) => {
+app.get("/requirements_profile/getall", (request, response) => {
 
     database.collection('requirements_profile').find({}).toArray().then((reqProfiles) => {
         if (reqProfiles == null) {
