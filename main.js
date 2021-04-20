@@ -43,32 +43,6 @@ app.get("/", (request, response) => {
 // ========= Authentification ========== // 
 
 //generating ajax request with body -> https://stackoverflow.com/questions/4159701/jquery-posting-valid-json-in-request-body
-//login student con body-> getStudent + generate token and save it
-app.get("/login/student", (request, response) => {
-    const { email, password } = request.body;
-    console.log(request.body);
-    const hashedPassword = md5(password);
-    database.collection('students').findOne({ email: email, password: hashedPassword }, (error, student) => {
-        if (error) {
-            return response.status(500).json({ error: error.message });
-        }
-        if (student == null) {
-            response.status(200).json({ msg: "Authentification failed." })
-        } else {
-            const { _id, name } = student;
-            const token = jwt.sign({ name: name }, email);
-
-            database.collection('students').updateOne({
-                "_id": new objectId(_id)
-            }, {
-                $set: {
-                    token: token
-                }
-            });
-            response.status(200).json(student);
-        }
-    });
-});
 
 //login student -> getStudent + generate token and save it solo /login/student para params con metodo postman
 app.get("/login/student/:email/:password", (request, response) => {
@@ -98,31 +72,6 @@ app.get("/login/student/:email/:password", (request, response) => {
     });
 });
 
-//login admin with body -> getAdmin + generate token and save it
-app.get("/login/admin", (request, response) => {
-    const { email, password } = request.body;
-    const hashedPassword = md5(password);
-    database.collection('admins').findOne({ email: email, password: hashedPassword }, (error, admin) => {
-        if (error) {
-            return response.status(500).json({ error: error.message });
-        }
-        if (admin == null) {
-            response.status(200).json({ msg: "Authentification failed." })
-        } else {
-            const { _id, name } = admin;
-            const token = jwt.sign({ name: name }, email);
-
-            database.collection('admins').updateOne({
-                "_id": new objectId(_id)
-            }, {
-                $set: {
-                    token: token
-                }
-            });
-            response.status(200).json(admin);
-        }
-    });
-});
 
 //login admin -> getAdmin + generate token and save it
 app.get("/login/admin/:email/:password", (request, response) => {
@@ -173,6 +122,27 @@ app.post("/career/create", (request, response) => {
         }
     }).catch((error) => {
         return response.status(500).json({ error: error.message });
+    });
+});
+
+app.delete("/career/delete/:code", (request, response) => {
+    var _code = request.params.code;
+    database.collection('careers').deleteOne({code: _code}, (error, res) => {
+        if (error){
+            response.status(500).json({ err: error});
+        }
+        response.status(200).json({msg:"Career deleted succesfully"});
+    });
+});
+
+app.put("/career/update/:code", (request, response) => {
+    var myquery = {code: request.params.code};
+    var careerObj = request.body.career;
+    database.collection('careers').updateOne(myquery, careerObj, (error, res) => {
+        if (error){
+            response.status(500).json({ err: error});
+        }
+        response.status(200).json({ msg: res.result.nModified+" documents modified"});
     });
 });
 
@@ -248,39 +218,17 @@ app.get("/career/getbystudenttoken/:token", (request, response) => {
 });
 
 app.put("/career/update/:code", (request, response) => {
-    
-});
-
-app.delete("/career/delete/:code", (request, response) => {
-
+    var myquery = {code: request.params.code};
+    var careerObj = request.body.career;
+    database.collection('careers').updateOne(myquery, careerObj, (error, res) => {
+        if (error){
+            response.status(500).json({ err: error});
+        }
+        response.status(200).json({ msg: res.result.nModified+" documents modified"});
+    });
 });
 
 //=========== Crud mps ===========//
-
-app.post("/mp/create", (request, response) => {
-    let newMp = request.body;
-    let career_mongo_id = newMp.career_id;
-    newMp.career_id = objectId(career_mongo_id);
-    let date_start = newMp.date_start;
-
-    if (date_start != null) {
-        newMp.date_start = new Date(date_start);
-    }
-    let date_end = newMp.date_end;
-    if (date_end != null) {
-        newMp.date_end = new Date(date_end);
-    }
-
-    database.collection('mps').insertOne(newMp).then(result => {
-        if (result.insertedCount == 0) {
-            response.status(200).json({ msg: "Failed insertion." })
-        } else {
-            response.status(200).json(result.insertedId);
-        }
-    }).catch((error) => {
-        return response.status(500).json({ error: error.message });
-    });
-});
 
 app.get("/mps/getbycareer/:careercode", (request, response) => {
 
@@ -319,6 +267,31 @@ app.get("/mps/getbycareer/:careercode", (request, response) => {
     });
 });
 
+app.post("/mp/create", (request, response) => {
+    let newMp = request.body;
+    let career_mongo_id = newMp.career_id;
+    newMp.career_id = objectId(career_mongo_id);
+    let date_start = newMp.date_start;
+
+    if (date_start != null) {
+        newMp.date_start = new Date(date_start);
+    }
+    let date_end = newMp.date_end;
+    if (date_end != null) {
+        newMp.date_end = new Date(date_end);
+    }
+
+    database.collection('mps').insertOne(newMp).then(result => {
+        if (result.insertedCount == 0) {
+            response.status(200).json({ msg: "Failed insertion." })
+        } else {
+            response.status(200).json(result.insertedId);
+        }
+    }).catch((error) => {
+        return response.status(500).json({ error: error.message });
+    });
+});
+
 app.get("/mp/get/:code", (request, response) => {
 
     const code = request.params.code;
@@ -335,15 +308,56 @@ app.get("/mp/get/:code", (request, response) => {
 });
 
 app.put("/mp/update/:code", (request, response) => {
-
+    var _code = request.params.code;
+    let mpObj = request.body;
+    database.collection('mps').findOne({code:_code}, (error, mp) => {
+        if (error){
+            response.status(500).json({ err: error});
+        }
+        if(mp == null){
+            response.status(200).json({ msg: "MP not found by code"});
+        } else {
+            database.collection('mps').updateOne({code:mp.code}, {$set:{mpObj}}, (error, res) => {
+                if (error){
+                    response.status(500).json({ err: error});
+                }
+                if(res == null){
+                    response.status(200).json({ msg: "Nothing updated"});
+                } else {
+                    response.status(200).json({ msg: "succesfull"});
+                }
+            });
+        }
+    });    
 });
 
 app.delete("/mp/delete/:code", (request, response) => {
-
+    var _code = request.params.code;
+    database.collection('mps').deleteOne({code: _code}, (error, res) => {
+        if (error){
+            response.status(500).json({ err: error});
+        }
+        response.status(200).json({msg:"Mp deleted succesfully"});
+    });
 });
 
 app.delete("/mps/delete/:careercode", (request, response) => {
-
+    var _code = request.params.careercode;
+    database.collection('careers').findOne({ code: _code }, (error, career) => {
+        if (error) {
+            return response.status(500).json({ error: error.message });
+        }
+        if (career == null) {
+            response.status(200).json({ msg: "No career found." })
+        } else {
+            database.collection('mps').deleteMany({career_id: career._id}, (error, res) => {
+            if (error){
+                response.status(500).json({ err: error});
+            }
+            response.status(200).json({msg:"Mp deleted succesfully"});
+            });
+        }
+    });
 });
 
 //=========== Crud ufs ===========//
@@ -493,7 +507,7 @@ app.get("/enrollment/getCompletedUfs",(request, response) => {
                 as: 'completed_ufs'
             }
        },
-       { $match: { token: '' } },
+       { $match: { token: _token } },
        { 
             $project: {
                     _id : 0,
@@ -740,15 +754,41 @@ app.get("/requirements_profile/getall", (request, response) => {
     });
 });
 
+
+
 // =================== UPLOADS PHOTOS ======================
 
-/*app.post("/uploadphoto", (request, response) => {
+app.post("/uploadphoto", (request, response) => {
+    console.log("upload");
+    /*var form = new formidable.IncomingForm();
+    var _token = request.body.token;
+    database.collection('students').findOne({ 'token': _token }, (error, student) => {
+        if (error) {
+            return response.status(500).json({ error: error.message });
+        }
+        if (student == null) {
+            response.status(200).json({ msg: "No student found." })
+        } else {
 
-    database.collection
-    }).catch((error) => {
-        return response.status(500).json({ error: error.message });
-    });
-});*/
+            form.parse(req);
+
+            form.on('fileBegin', function (name, file){
+                console.log("Nombre = "+student.document_id.id+"_"+student.document_id.type);
+                file.path = __dirname + '/uploads/' + file.name;
+            });
+
+            form.on('file', function (name, file){
+                console.log('Uploaded ' + file.name);
+                res.sendFile(__dirname + '/index.html');
+            });
+
+            form.on('error', function (err){
+                res.status(500).sendFile(__dirname + '/error.html')
+            });
+        }
+    });*/
+
+});
 
 /**
  * NOTAS ALEC
