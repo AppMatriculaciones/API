@@ -475,6 +475,21 @@ app.get("/uf/get/:code", (request, response) => {
 
 });
 
+app.get("/uf/getbyid/:id", (request, response) => {
+
+    const id = new objectId(request.params.id);
+    database.collection('ufs').findOne({ _id: id }, (error, uf) => {
+        if (error) {
+            return response.status(500).json({ error: error.message });
+        }
+        if (uf == null) {
+            response.status(200).json({ msg: "No uf found." })
+        } else {
+            response.status(200).json(uf);
+        }
+    });
+});
+
 app.put("/uf/update/:code", (request, response) => {
 
 });
@@ -723,8 +738,69 @@ app.post("/enrollment/create", (request, response) => {
     });
 });
 
+app.get("/enrollment/getbystudentid/:id", (request, response) => {
+
+    const id = new objectId(request.params.id);
+    database.collection('enrollments').findOne({ 'student_id': id }, (error, enrollement) => {
+        if (error) {
+            return response.status(500).json({ error: error.message });
+        }
+        if (enrollement == null) {
+            response.status(200).json({ msg: "No enrollement found." })
+        } else {
+            response.status(200).json(enrollement);
+        }
+    });
+});
+
+app.put("/enrollment/updatebyid/:id", (request, response) => {
+    const id = new objectId(request.params.id);
+    let updatedEnrollment = request.body;
+
+    let start_date = updatedEnrollment.start_date;
+    if (start_date != null) {
+        updatedEnrollment.start_date = new Date(start_date);
+    }
+    let end_date = updatedEnrollment.end_date;
+    if (end_date != null) {
+        updatedEnrollment.end_date = new Date(end_date);
+    }
+    
+    for(i = 0; i <= updatedEnrollment.ufs_id.length - 1; i++){
+        updatedEnrollment.ufs_id[i] = new objectId(updatedEnrollment.ufs_id[i]);
+    }
+
+    updatedEnrollment.student_id = objectId(updatedEnrollment.student_id);
+    updatedEnrollment.career_id = objectId(updatedEnrollment.career_id);
+
+    database.collection('enrollments').replaceOne({ '_id': id }, updatedEnrollment, (error, resultUpdate) => {
+        if (error) {
+            return response.status(500).json({ error: error.message });
+        }
+        if (resultUpdate.modifiedCount == 0) {
+            response.status(200).json({ msg: "No enrollement updated." })
+        } else {
+            response.status(200).json({ 'number of documents updated': resultUpdate.modifiedCount});
+        }
+    });
+});
+
 
 // =============== CRUD REQUIREMENTS ============= //
+
+app.post("/requirements_profile/create", (request, response) => {
+    let newReqProfile = request.body;
+
+    database.collection('requirements_profile').insertOne(newReqProfile).then(result => {
+        if (result.insertedCount == 0) {
+            response.status(200).json({ msg: "Failed insertion." })
+        } else {
+            response.status(200).json(result.insertedId);
+        }
+    }).catch((error) => {
+        return response.status(500).json({ error: error.message });
+    });
+});
 
 app.get("/requirements_profile/getbyid/:id", (request, response) => {
 
@@ -741,6 +817,7 @@ app.get("/requirements_profile/getbyid/:id", (request, response) => {
     });
 });
 
+<<<<<<< HEAD
 app.get("/requirements_profile/getall", (request, response) => {
 
     database.collection('requirements_profile').find({}).toArray().then((profile) => {
@@ -748,12 +825,22 @@ app.get("/requirements_profile/getall", (request, response) => {
             response.status(200).json({ msg: "No requeriment profiles found." })
         } else {
             response.status(200).json(profile);
+=======
+app.get("/requirements_profile/get", (request, response) => {
+
+    database.collection('requirements_profile').find({}).toArray().then((reqProfiles) => {
+        if (reqProfiles == null) {
+            response.status(200).json({ msg: "No requirements profile found." })
+        } else {
+            response.status(200).json(reqProfiles);
+>>>>>>> a1a681492bce5f783585bfce453731cc4f695d52
         }
     }).catch((error) => {
         return response.status(500).json({ error: error.message });
     });
 });
 
+<<<<<<< HEAD
 
 
 // =================== UPLOADS PHOTOS ======================
@@ -812,3 +899,11 @@ fetch().then(respuesta => {return new Promise((accept, reject) => {  try{ accept
 }
 */
 
+=======
+//=========== CRUD DOCUMENTS ==============//
+
+app.get('/document/get/:fileName', (request, response) =>{
+    const fileName = request.params.fileName;
+    response.sendFile(__dirname + '/uploads/'+fileName);
+});
+>>>>>>> a1a681492bce5f783585bfce453731cc4f695d52
