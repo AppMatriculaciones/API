@@ -222,13 +222,13 @@
     </tr>
     </table>
     </br>
-    <h2>/career/updateOne/code</h2>
+    <h2>/career/update/:code</h2>
     <table style="width:100%">
         <tr>
             <th colspan="5">Request (JSON)</th>
         </tr>
         <tr>
-            <th colspan="5">PUT appmatriculacioaaj/career/updateOne/{code}</th>
+            <th colspan="5">PUT appmatriculacioaaj/career/update/{code}</th>
         </tr>
         <tr>
             <th>Params</th>
@@ -246,7 +246,7 @@
             <th colspan="4">Response</th>
         </tr>
         <tr>
-            <th colspan="4">PUT appmatriculacioaaj/career/updateOne/{code}</th>
+            <th colspan="4">PUT appmatriculacioaaj/career/update/{code}</th>
         </tr>
         <tr>
             <th>Param</th>
@@ -260,13 +260,57 @@
         </tr>
     </table>
     </br>
-    <h2>/career/readOne/code</h2>
+     <h2>/career/get</h2>
     <table style="width:100%">
         <tr>
             <th colspan="5">Request</th>
         </tr>
         <tr>
-            <th colspan="5">GET appmatriculacioaaj/career/readOne/{code}</th>
+            <th colspan="5">GET appmatriculacioaaj/career/get</th>
+        </tr>
+        <tr>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>null</td>
+            <td>null</td>
+            <td>null</td>
+        </tr>
+    </table>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
+        </tr>
+        <tr>
+            <th colspan="4">GET appmatriculacioaaj/career/get</th>
+        </tr>
+        <tr>
+            <th>Param</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>500/200</td>
+            <td>Query Stat</td>
+        </tr>
+        <tr>
+            <td>body</td>
+            <td>JSON</td>
+            <td>All database careers</td>
+        </tr>
+    </table>
+    <h5>{RETURN: _id, code, name, hours, date_start, date_end, family, isDual, code_educational}</h5>
+    </br>
+    <h2>/career/get/:code</h2>
+    <table style="width:100%">
+        <tr>
+            <th colspan="5">Request</th>
+        </tr>
+        <tr>
+            <th colspan="5">GET appmatriculacioaaj/career/get/{code}</th>
         </tr>
         <tr>
             <th>Params</th>
@@ -284,7 +328,7 @@
             <th colspan="4">Response</th>
         </tr>
         <tr>
-            <th colspan="4">GET appmatriculacioaaj/career/readOne/{code}</th>
+            <th colspan="4">GET appmatriculacioaaj/career/get/{code}</th>
         </tr>
         <tr>
             <th>Param</th>
@@ -302,14 +346,15 @@
             <td>All career data.</td>
         </tr>
     </table>
+    <h5>{RETURN: _id, code, name, hours, date_start, date_end, family, isDual, code_educational}</h5>
     </br>
-    <h2>/career/readAll/</h2>
+    <h2>/career/getbyid/:id</h2>
     <table style="width:100%">
         <tr>
             <th colspan="5">Request</th>
         </tr>
         <tr>
-            <th colspan="5">GET appmatriculacioaaj/career/readAll/</th>
+            <th colspan="5">GET appmatriculacioaaj/career/getbyid/{id}</th>
         </tr>
         <tr>
             <th>Params</th>
@@ -317,9 +362,9 @@
             <th>Description</th>
         </tr>
         <tr>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
+            <td>cose</td>
+            <td>string</td>
+            <td>Code to read</td>
         </tr>
     </table>
     <table style="width:100%">
@@ -327,7 +372,7 @@
             <th colspan="4">Response</th>
         </tr>
         <tr>
-            <th colspan="4">GET appmatriculacioaaj/career/readAll/</th>
+            <th colspan="4">GET appmatriculacioaaj/career/getbyid/{id}</th>
         </tr>
         <tr>
             <th>Param</th>
@@ -342,20 +387,64 @@
         <tr>
             <td>body</td>
             <td>JSON</td>
-            <td>Returns an ID and Name from a career</td>
+            <td>All career data.</td>
         </tr>
     </table>
-    <h5>RETURN: {"Status":200, "_id":128370293849723084, "name": "Desenvolupament d'Aplicacions Multiplataforma"}</h5>
-    </br></br>
-    <h1>MP's CRUD</h1>
+    <h5>{RETURN: _id, code, name, hours, date_start, date_end, family, isDual, code_educational}</h5>
     </br>
-    <h2>/mps/getbycareer/code</h2>
+    <h2>/career/getbystudenttoken/:token</h2>
     <table style="width:100%">
         <tr>
             <th colspan="5">Request</th>
         </tr>
         <tr>
-            <th colspan="5">GET appmatriculacioaaj.herokuapp.com/mps/getbycareer/code</th>
+            <th colspan="5">GET appmatriculacioaaj/career/getbystudenttoken/{token}</th>
+        </tr>
+        <tr>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>cose</td>
+            <td>string</td>
+            <td>Code to read</td>
+        </tr>
+    </table>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
+        </tr>
+        <tr>
+            <th colspan="4">GET appmatriculacioaaj/career/getbystudenttoken/{token}</th>
+        </tr>
+        <tr>
+            <th>Param</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>500/200</td>
+            <td>Query Stat</td>
+        </tr>
+        <tr>
+            <td>body</td>
+            <td>JSON</td>
+            <td>All career data.</td>
+        </tr>
+    </table>
+    <h5>{RETURN: career_id}</h5>
+    </br></br>
+    <h1>MP's CRUD</h1>
+    </br>
+    <h2>/mps/getbycareer/:careercode</h2>
+    <table style="width:100%">
+        <tr>
+            <th colspan="5">Request</th>
+        </tr>
+        <tr>
+            <th colspan="5">GET appmatriculacioaaj.herokuapp.com/mps/getbycareer/:careercode</th>
         </tr>
         <tr>
             <th>Params</th>
@@ -373,7 +462,7 @@
             <th colspan="4">Response</th>
         </tr>
         <tr>
-            <th colspan="4">GET appmatriculacioaaj.herokuapp.com/mps/getbycareer/code</th>
+            <th colspan="4">GET appmatriculacioaaj.herokuapp.com/mps/getbycareer/:careercode</th>
         </tr>
         <tr>
             <th>Param</th>
@@ -388,17 +477,61 @@
         <tr>
             <td>body</td>
             <td>JSON</td>
-            <td>Returns a MP from a career_id</td>
+            <td>Returns all MP's from a careercode</td>
         </tr>
     </table>
+    <h5>{RETURN: _id, code, name, duration_min, duration_max, date_start, date_end, career_id}</h5>
     </br>
-    <h2>/mps/update/code</h2>
+    <h2>/mp/get/:code</h2>
     <table style="width:100%">
         <tr>
             <th colspan="5">Request</th>
         </tr>
         <tr>
-            <th colspan="5">PUT appmatriculacioaaj.herokuapp.com/mps/getbycareer/code</th>
+            <th colspan="5">GET appmatriculacioaaj.herokuapp.com/mp/get/:code</th>
+        </tr>
+        <tr>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>code</td>
+            <td>string</td>
+            <td>Searchs from a code of career</td>
+        </tr>
+    </table>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
+        </tr>
+        <tr>
+            <th colspan="4">GET appmatriculacioaaj.herokuapp.com/mp/get/:code</th>
+        </tr>
+        <tr>
+            <th>Param</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>500/200</td>
+            <td>Query Stat</td>
+        </tr>
+        <tr>
+            <td>body</td>
+            <td>JSON</td>
+            <td>Returns an MP from a MP code</td>
+        </tr>
+    </table>
+    <h5>{RETURN: _id, code, name, duration_min, duration_max, date_start, date_end, career_id}</h5>
+    <h2>/mp/update/code</h2>
+    <table style="width:100%">
+        <tr>
+            <th colspan="5">Request</th>
+        </tr>
+        <tr>
+            <th colspan="5">PUT appmatriculacioaaj.herokuapp.com/mp/update/{code}</th>
         </tr>
         <tr>
             <th>Params</th>
@@ -416,7 +549,7 @@
             <th colspan="4">Response</th>
         </tr>
         <tr>
-            <th colspan="4">PUT appmatriculacioaaj.herokuapp.com/mps/update/code</th>
+            <th colspan="4">PUT appmatriculacioaaj.herokuapp.com/mp/update/{code}</th>
         </tr>
         <tr>
             <th>Param</th>
@@ -441,7 +574,7 @@
             <th colspan="5">Request</th>
         </tr>
         <tr>
-            <th colspan="5">DELETE appmatriculacioaaj.herokuapp.com/mp/delete/code</th>
+            <th colspan="5">DELETE appmatriculacioaaj.herokuapp.com/mp/delete/{code}</th>
         </tr>
         <tr>
             <th>Params</th>
@@ -459,7 +592,7 @@
             <th colspan="4">Response</th>
         </tr>
         <tr>
-            <th colspan="4">DELETE appmatriculacioaaj.herokuapp.com/mp/delete/code</th>
+            <th colspan="4">DELETE appmatriculacioaaj.herokuapp.com/mp/delete/{code}</th>
         </tr>
         <tr>
             <th>Param</th>
@@ -474,7 +607,7 @@
         <tr>
             <td>Succes</td>
             <td>True/False</td>
-            <td>True if the action is correct and false if it's wrong</td>
+            <td>'Succesfull' if the action is correct and 'Nothing updated' if it's wrong</td>
         </tr>
     </table>
     </br>
@@ -484,7 +617,7 @@
             <th colspan="5">Request</th>
         </tr>
         <tr>
-            <th colspan="5">DELETE appmatriculacioaaj.herokuapp.com/mps/delete/careercode</th>
+            <th colspan="5">DELETE appmatriculacioaaj.herokuapp.com/mps/delete/{careercode}</th>
         </tr>
         <tr>
             <th>Params</th>
@@ -502,7 +635,7 @@
             <th colspan="4">Response</th>
         </tr>
         <tr>
-            <th colspan="4">DELETE appmatriculacioaaj.herokuapp.com/mps/delete/careercode</th>
+            <th colspan="4">DELETE appmatriculacioaaj.herokuapp.com/mps/delete/{careercode}</th>
         </tr>
         <tr>
             <th>Param</th>
@@ -517,7 +650,7 @@
         <tr>
             <td>Succes</td>
             <td>True/False</td>
-            <td>True if the action is correct and false if it's wrong</td>
+            <td>'Mp deleted succesfull' if the action is correct and 'error' if it's wrong</td>
         </tr>
     </table>
     </br></br>
@@ -607,6 +740,7 @@
             <td>Returns all UF's from career code</td>
         </tr>
     </table>
+    <h5>{RETURN: _id, code, name, duration, isProject, isSintesi, isFct, isLanguage, mp_id}</h5>
     </br>
     <h2>/uf/getbymp/{mpcode}</h2>
     <table style="width:100%">
@@ -650,6 +784,7 @@
             <td>Returns all UF's from mp code</td>
         </tr>
     </table>
+    <h5>{RETURN: _id, code, name, duration, isProject, isSintesi, isFct, isLanguage, mp_id}</h5>
     </br>
     <h2>/uf/get/{code}</h2>
     <table style="width:100%">
@@ -693,6 +828,7 @@
             <td>Returns all UF's from code</td>
         </tr>
     </table>
+    <h5>{RETURN: _id, code, name, duration, isProject, isSintesi, isFct, isLanguage, mp_id}</h5>
     </br>
     <h2>/uf/update/{code}</h2>
     <table style="width:100%">
@@ -785,6 +921,49 @@
         </tr>
     </table>
     <h1>Enrollment endpoints</h1>
+    <h2>/enrollment/create</h2>
+    <table style="width:100%">
+        <tr>
+            <th colspan="5">Request</th>
+        </tr>
+        <tr>
+            <th colspan="5">POST appmatriculacioaaj.herokuapp.com/enrollment/create</th>
+        </tr>
+        <tr>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>body</td>
+            <td>json</td>
+            <td>Enrollment object</td>
+        </tr>
+    </table>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
+        </tr>
+        <tr>
+            <th colspan="4">POST appmatriculacioaaj.herokuapp.com/enrollment/create</th>
+        </tr>
+        <tr>
+            <th>Param</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>500/200</td>
+            <td>Query Stat</td>
+        </tr>
+        <tr>
+            <td>body</td>
+            <td>JSON</td>
+            <td>Returns the ID for the new enrollment</td>
+        </tr>
+    </table>
+    </br>
     <h2>/enrollment/getCompletedUfs</h2>
     <table style="width:100%">
         <tr>
@@ -799,9 +978,13 @@
             <th>Description</th>
         </tr>
         <tr>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
+            <td>body</td>
+            <td>json</td>
+<<<<<<< HEAD
+            <td>2 required parameters, token (user token) and UF's (user enrolling UF's)</td>
+=======
+            <td>Token in body parameters</td>
+>>>>>>> d7e0dd8eb103d70b6160e47b16569977f959da38
         </tr>
     </table>
     <table style="width:100%">
@@ -824,9 +1007,15 @@
         <tr>
             <td>body</td>
             <td>JSON</td>
+<<<<<<< HEAD
+            <td>Total of modified documents</td>
+=======
             <td>Returns all completed UF's</td>
+>>>>>>> d7e0dd8eb103d70b6160e47b16569977f959da38
         </tr>
     </table>
+    <h5>{RETURN: students.completed_ufs}</h5>
+    <br>
     <h2>/enrollment/addUfs</h2>
     <table style="width:100%">
         <tr>
@@ -843,7 +1032,7 @@
         <tr>
             <td>body</td>
             <td>json</td>
-            <td>2 required parameters, token (user token) and UF's (user enrolling UF's)</td>
+            <td>An array of ObjectId of UF's</td>
         </tr>
     </table>
     <table style="width:100%">
@@ -866,10 +1055,11 @@
         <tr>
             <td>body</td>
             <td>JSON</td>
-            <td>Total of modified documents</td>
+            <td>Returns the total of modified documents</td>
         </tr>
     </table>
-        </br></br>
+    <h5>{RETURN: "X modified documents"}</h5>
+    </br>
     <h1>REQUERIMENTS ENDPOINTS</h1>
     </table>
     <h2>/requeriments/addRequeriment</h2>
@@ -886,9 +1076,9 @@
             <th>Description</th>
         </tr>
         <tr>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
+            <td>body</td>
+            <td>json</td>
+            <td>JSON with all requeriment data</td>
         </tr>
     </table>
     <table style="width:100%">
@@ -909,9 +1099,9 @@
             <td>Query Stat</td>
         </tr>
         <tr>
-            <td>body</td>
-            <td>JSON</td>
-            <td>Returns the new Requeriment</td>
+            <td>msg</td>
+            <td>true/false</td>
+            <td>'Succesfull' if is added correct and 'error' if is not</td>
         </tr>
     </table>
         </br></br>
@@ -958,49 +1148,7 @@
             <td>Returns all Requeriments</td>
         </tr>
     </table>
-    </br></br>
-    <h2>/requeriments/getByType/{requerimentType}</h2>
-    <table style="width:100%">
-        <tr>
-            <th colspan="5">Request</th>
-        </tr>
-        <tr>
-            <th colspan="5">GET appmatriculacioaaj.herokuapp.com/requeriments/getByType/{requerimentType}</th>
-        </tr>
-        <tr>
-            <th>Params</th>
-            <th>Value</th>
-            <th>Description</th>
-        </tr>
-        <tr>
-            <td>type</td>
-            <td>String</td>
-            <td>Requeriment Type</td>
-        </tr>
-    </table>
-    <table style="width:100%">
-        <tr>
-            <th colspan="4">Response</th>
-        </tr>
-        <tr>
-            <th colspan="4">GET appmatriculacioaaj.herokuapp.com/requeriments/getByType/{requerimentType}</th>
-        </tr>
-        <tr>
-            <th>Param</th>
-            <th>Value</th>
-            <th>Description</th>
-        </tr>
-        <tr>
-            <td>status</td>
-            <td>500/200</td>
-            <td>Query Stat</td>
-        </tr>
-        <tr>
-            <td>body</td>
-            <td>JSON</td>
-            <td>Returns one Requeriment</td>
-        </tr>
-    </table>
+    <h5>{RETURN: type, requeriments(ARRAY)}</h5>
         </br></br>
     <h1>STUDENTS CRUD</h1>
     </br>
@@ -1018,9 +1166,9 @@
             <th>Description</th>
         </tr>
         <tr>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
+            <td>body</td>
+            <td>json</td>
+            <td>Student object</td>
         </tr>
     </table>
     <table style="width:100%">
@@ -1061,7 +1209,7 @@
             <th>Description</th>
         </tr>
         <tr>
-            <td>Code</td>
+            <td>doc_id</td>
             <td>string</td>
             <td>Student's document id to be deleted</td>
         </tr>
@@ -1142,6 +1290,8 @@
             <td>Student's document id to be fetched</td>
         </tr>
     </table>
+    <h5>{RETURN: _id, name, first_surname, second_surname, email, password, token, phone, ufs_completed(ARRAY), ralc_id, document_id(ARRAY), birthday, address(ARRAY), birthplace(ARRAY), sex, tutors(ARRAY), former_studies(ARRAY), languages}</h5>
+    <br>
     <table style="width:100%">
         <tr>
             <th colspan="4">Response</th>
@@ -1208,6 +1358,7 @@
             <td>Students' data.</td>
         </tr>
     </table>
+    <h5>{RETURN: name, first_surname, second_surname, email, password, token, phone, ufs_completed(ARRAY), ralc_id, document_id(ARRAY), birthday, address(ARRAY), birthplace(ARRAY), sex, tutors(ARRAY), former_studies(ARRAY), languages}</h5>
     </br>
     <h2>/students/get</h2>
     <table style="width:100%">
@@ -1251,6 +1402,48 @@
             <td>All students' data</td>
         </tr>
     </table>
+    <h5>{RETURN: _id, name, first_surname, second_surname, email, password, token, phone, ufs_completed(ARRAY), ralc_id, document_id(ARRAY), birthday, address(ARRAY), birthplace(ARRAY), sex, tutors(ARRAY), former_studies(ARRAY), languages}</h5>
+    <br>
+<h1>DOCUMENTS ENDPOINTS</h1>
+    </br>
+    <h2>/document/get/:fileName</h2>
+    <table style="width:100%">
+        <tr>
+            <th colspan="5">Request</th>
+        </tr>
+        <tr>
+            <th colspan="5">GET appmatriculacioaaj/document/get/{fileName}</th>
+        </tr>
+        <tr>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>body</td>
+            <td>json</td>
+            <td>File name</td>
+        </tr>
+    </table>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
+        </tr>
+        <tr>
+            <th colspan="4">GET appmatriculacioaaj/student/create</th>
+        </tr>
+        <tr>
+            <th>Param</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>null</td>
+            <td>null</td>
+            <td>null</td>
+        </tr>
+    </table>
+    </br>
 </body>
 
 </html>
