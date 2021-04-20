@@ -460,7 +460,10 @@ app.post("/student/create", (request, response) => {
         newStudent.ufs_completed[i] = new objectId(newStudent.ufs_completed[i]);
     }
 
-    newStudent.requirements_profile_id = objectId(newStudent.requirements_profile_id);
+    if(newStudent.requirements_profile_id != null){
+        newStudent.requirements_profile_id = objectId(newStudent.requirements_profile_id);
+    }
+    
 
     database.collection('students').insertOne(newStudent).then(result => {
         if (result.insertedCount == 0) {
