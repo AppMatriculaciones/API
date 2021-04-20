@@ -13,7 +13,7 @@ const app = express();
 //Defining global variables
 const PORT = process.env.PORT || 5000;
 const CONNECTION_URL = "mongodb+srv://alec:alec@mflix.spncl.mongodb.net/project_online_enrollement?authSource=admin&replicaSet=atlas-5qhdga-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true";
-const DATABASE_NAME = "project_online_enrollement";
+const DATABASE_NAME = "project_online_enrollment_test";
 var database, collection;
 
 //https://stackoverflow.com/questions/39870867/what-does-app-usebodyparser-json-do
