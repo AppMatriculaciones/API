@@ -817,15 +817,6 @@ app.get("/requirements_profile/getbyid/:id", (request, response) => {
     });
 });
 
-<<<<<<< HEAD
-app.get("/requirements_profile/getall", (request, response) => {
-
-    database.collection('requirements_profile').find({}).toArray().then((profile) => {
-        if (profile == null) {
-            response.status(200).json({ msg: "No requeriment profiles found." })
-        } else {
-            response.status(200).json(profile);
-=======
 app.get("/requirements_profile/get", (request, response) => {
 
     database.collection('requirements_profile').find({}).toArray().then((reqProfiles) => {
@@ -833,15 +824,18 @@ app.get("/requirements_profile/get", (request, response) => {
             response.status(200).json({ msg: "No requirements profile found." })
         } else {
             response.status(200).json(reqProfiles);
->>>>>>> a1a681492bce5f783585bfce453731cc4f695d52
         }
     }).catch((error) => {
         return response.status(500).json({ error: error.message });
     });
 });
 
-<<<<<<< HEAD
+//=========== CRUD DOCUMENTS ==============//
 
+app.get('/document/get/:fileName', (request, response) =>{
+    const fileName = request.params.fileName;
+    response.sendFile(__dirname + '/uploads/'+fileName);
+});
 
 // =================== UPLOADS PHOTOS ======================
 
@@ -899,11 +893,3 @@ fetch().then(respuesta => {return new Promise((accept, reject) => {  try{ accept
 }
 */
 
-=======
-//=========== CRUD DOCUMENTS ==============//
-
-app.get('/document/get/:fileName', (request, response) =>{
-    const fileName = request.params.fileName;
-    response.sendFile(__dirname + '/uploads/'+fileName);
-});
->>>>>>> a1a681492bce5f783585bfce453731cc4f695d52
