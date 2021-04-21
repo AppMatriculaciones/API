@@ -13,7 +13,7 @@ const app = express();
 //Defining global variables
 const PORT = process.env.PORT || 5000;
 const CONNECTION_URL = "mongodb+srv://alec:alec@mflix.spncl.mongodb.net/project_online_enrollement?authSource=admin&replicaSet=atlas-5qhdga-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true";
-const DATABASE_NAME = "project_online_enrollment_test";
+const DATABASE_NAME = "project_online_enrollement";
 var database, collection;
 
 //https://stackoverflow.com/questions/39870867/what-does-app-usebodyparser-json-do
@@ -248,11 +248,26 @@ app.get("/career/getbystudenttoken/:token", (request, response) => {
 });
 
 app.put("/career/update/:code", (request, response) => {
-    
+    var myquery = {code: request.params.code};
+    var careerObj = request.body;
+    careerObj.date_start = new Date(careerObj.date_start);
+    careerObj.date_end = new Date(careerObj.date_end);
+    database.collection('careers').replaceOne(myquery, careerObj, (error, res) => {
+        if (error){
+            response.status(500).json({ error: error});
+        }
+        response.status(200).json({ msg: res.result.nModified+" documents modified"});
+    });
 });
 
 app.delete("/career/delete/:code", (request, response) => {
-
+    var _code = request.params.code;
+    database.collection('careers').deleteOne({code: _code}, (error, res) => {
+        if (error){
+            response.status(500).json({ err: error});
+        }
+        response.status(200).json({msg:"Career deleted succesfully"});
+    });
 });
 
 //=========== Crud mps ===========//
@@ -336,14 +351,46 @@ app.get("/mp/get/:code", (request, response) => {
 
 app.put("/mp/update/:code", (request, response) => {
 
+    var myquery = {code: request.params.code};
+    var mpObj = request.body;
+    mpObj.date_start = new Date(mpObj.date_start);
+    mpObj.date_end = new Date(mpObj.date_end);
+    mpObj.career_id = new objectId(mpObj.career_id);
+    database.collection('mps').replaceOne(myquery, mpObj, (error, res) => {
+        if (error){
+            response.status(500).json({ error: error});
+        }
+        response.status(200).json({ msg: res.result.nModified+" documents modified"});
+    }); 
 });
 
 app.delete("/mp/delete/:code", (request, response) => {
-
+    var _code = request.params.code;
+    database.collection('mps').deleteOne({code: _code}, (error, res) => {
+        if (error){
+            response.status(500).json({ err: error});
+        }
+        response.status(200).json({msg:"Mp deleted succesfully"});
+    });
 });
 
 app.delete("/mps/delete/:careercode", (request, response) => {
-
+    var _code = request.params.careercode;
+    database.collection('careers').findOne({ code: _code }, (error, career) => {
+        if (error) {
+            return response.status(500).json({ error: error.message });
+        }
+        if (career == null) {
+            response.status(200).json({ msg: "No career found." })
+        } else {
+            database.collection('mps').deleteMany({career_id: career._id}, (error, res) => {
+            if (error){
+                response.status(500).json({ err: error});
+            }
+            response.status(200).json({msg:"Mp deleted succesfully"});
+            });
+        }
+    });
 });
 
 //=========== Crud ufs ===========//
