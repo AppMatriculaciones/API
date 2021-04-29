@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <style>
         table,
@@ -10,7 +9,6 @@
         }
     </style>
 </head>
-
 <body>
     <h2>login/student/email/password</h2>
     <table style="width:100%">
