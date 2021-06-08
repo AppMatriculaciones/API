@@ -855,11 +855,11 @@ app.post("/requirements_profile/update_student_rp", (request, response) => {
     var myquery = {email: request.body.email};
     var reqProfId = request.body.requirements_profile_id;
     console.log(request.body.email);
+    
     database.collection('students').updateOne(myquery, {$set: {requirements_profile_id:objectId(reqProfId)}}, (error, res) => {
         if (error){
             response.status(500).json({ err: error});
         }
-        
         response.status(200).json({ msg: res.result.nModified+" documents modified"});
     }); 
 });
