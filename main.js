@@ -217,17 +217,6 @@ app.get("/career/getbystudenttoken/:token", (request, response) => {
     });
 });
 
-app.put("/career/update/:code", (request, response) => {
-    var myquery = {code: request.params.code};
-    var careerObj = request.body.career;
-    database.collection('careers').updateOne(myquery, careerObj, (error, res) => {
-        if (error){
-            response.status(500).json({ err: error});
-        }
-        response.status(200).json({ msg: res.result.nModified+" documents modified"});
-    });
-});
-
 //=========== Crud mps ===========//
 
 app.get("/mps/getbycareer/:careercode", (request, response) => {
@@ -579,7 +568,10 @@ app.post("/student/create", (request, response) => {
         newStudent.ufs_completed[i] = new objectId(newStudent.ufs_completed[i]);
     }
 
-    newStudent.requirements_profile_id = objectId(newStudent.requirements_profile_id);
+    if(newStudent.requirements_profile_id != null){
+        newStudent.requirements_profile_id = objectId(newStudent.requirements_profile_id);
+    }
+    
 
     database.collection('students').insertOne(newStudent).then(result => {
         if (result.insertedCount == 0) {
@@ -651,6 +643,22 @@ app.get("/student/getbydocid/:docId", (request, response) => {
 
     const docId = request.params.docId;
     database.collection('students').findOne({ 'document_id.id': docId }, (error, student) => {
+        if (error) {
+            return response.status(500).json({ error: error.message });
+        }
+        if (student == null) {
+            response.status(200).json({ msg: "No student found." })
+        } else {
+            response.status(200).json(student);
+        }
+    });
+});
+
+app.get("/student/getbytoken/:token", (request, response) => {
+
+    const token = request.params.token;
+    console.log(token);
+    database.collection('students').findOne({ 'token': token }, (error, student) => {
         if (error) {
             return response.status(500).json({ error: error.message });
         }
@@ -816,6 +824,18 @@ app.get("/requirements_profile/getall", (request, response) => {
     }).catch((error) => {
         return response.status(500).json({ error: error.message });
     });
+});
+
+app.post("/requirements_profile/update_student_rp", (request, response) => {
+    var myquery = {email: request.body.email};
+    var reqProfId = request.body.requirements_profile_id;
+    console.log(request.body.email);
+    database.collection('students').updateOne(myquery, {$set: {requirements_profile_id:objectId(reqProfId)}}, (error, res) => {
+        if (error){
+            response.status(500).json({ err: error});
+        }
+        response.status(200).json({ msg: res.result.nModified+" documents modified"});
+    }); 
 });
 
 //=========== CRUD DOCUMENTS ==============//
