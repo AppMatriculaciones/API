@@ -217,8 +217,6 @@ app.get("/career/getbystudenttoken/:token", (request, response) => {
     });
 });
 
-<<<<<<< HEAD
-=======
 app.put("/career/update/:code", (request, response) => {
     var myquery = {code: request.params.code};
     var careerObj = request.body;
@@ -241,8 +239,6 @@ app.delete("/career/delete/:code", (request, response) => {
         response.status(200).json({msg:"Career deleted succesfully"});
     });
 });
-
->>>>>>> ad54fb60ef2c426d5e1ec531b11c8afe6ccbf9a4
 //=========== Crud mps ===========//
 
 app.get("/mps/getbycareer/:careercode", (request, response) => {
@@ -863,6 +859,7 @@ app.post("/requirements_profile/update_student_rp", (request, response) => {
         if (error){
             response.status(500).json({ err: error});
         }
+        
         response.status(200).json({ msg: res.result.nModified+" documents modified"});
     }); 
 });
