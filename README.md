@@ -1148,6 +1148,50 @@
     </table>
     <h5>{RETURN: type, requeriments(ARRAY)}</h5>
         </br></br>
+        <h2>/requeriments_profile/update_student_rp</h2>
+    <table style="width:100%">
+        <tr>
+            <th colspan="5">Request</th>
+        </tr>
+        <tr>
+            <th colspan="5">POST appmatriculacioaaj.herokuapp.com/requeriments_profile/update_student_rp</th>
+        </tr>
+        <tr>
+            <th>Params</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>body</td>
+            <td>json</td>
+            <td>JSON with student email and new requirement profile id</td>
+        </tr>
+    </table>
+    <h5>BODY {"email":email, "requirements_profile_id" : id}</h5>
+    <table style="width:100%">
+        <tr>
+            <th colspan="4">Response</th>
+        </tr>
+        <tr>
+            <th colspan="4">POST appmatriculacioaaj.herokuapp.com/requeriments_profile/update_student_rp</th>
+        </tr>
+        <tr>
+            <th>Param</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>500/200</td>
+            <td>Query Stat</td>
+        </tr>
+        <tr>
+            <td>msg</td>
+            <td>true/false</td>
+            <td>"N documents modified"/Error message</td>
+        </tr>
+    </table>
+        </br></br>
     <h1>STUDENTS CRUD</h1>
     </br>
     <h2>/student/create</h2>
